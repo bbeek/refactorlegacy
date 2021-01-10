@@ -11,13 +11,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitPhaseTests", "Tests\Sp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Day 1", "Day 1", "{C4158DBC-C486-4D3D-AAA4-D34964FAB930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplaceConditionalWithPolymorphism", "ReplaceConditionalWithPolymorphism\ReplaceConditionalWithPolymorphism.csproj", "{DD5D1840-FC60-4796-A460-9A9322BDAFF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceConditionalWithPolymorphism", "ReplaceConditionalWithPolymorphism\ReplaceConditionalWithPolymorphism.csproj", "{DD5D1840-FC60-4796-A460-9A9322BDAFF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplaceConditionalWithPolymorphismTests", "ReplaceConditionalWithPolymorphismTests\ReplaceConditionalWithPolymorphismTests.csproj", "{CD8D08BC-2CF8-4659-A750-8B7CE1B64085}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceConditionalWithPolymorphismTests", "ReplaceConditionalWithPolymorphismTests\ReplaceConditionalWithPolymorphismTests.csproj", "{CD8D08BC-2CF8-4659-A750-8B7CE1B64085}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplaceLoopWithPipeline", "ReplaceLoopWithPipeline\ReplaceLoopWithPipeline.csproj", "{736E33BA-CCED-4E89-B1EC-FF7E4C75F8CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceLoopWithPipeline", "ReplaceLoopWithPipeline\ReplaceLoopWithPipeline.csproj", "{736E33BA-CCED-4E89-B1EC-FF7E4C75F8CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplaceLoopWithPipelineTests", "ReplaceLoopWithPipelineTests\ReplaceLoopWithPipelineTests.csproj", "{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceLoopWithPipelineTests", "ReplaceLoopWithPipelineTests\ReplaceLoopWithPipelineTests.csproj", "{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitLoop", "SplitLoop\SplitLoop.csproj", "{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitLoopTests", "Tests\SplitLoopTests\SplitLoopTests.csproj", "{FF8804D7-370C-4914-963A-723B123E5CF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF8804D7-370C-4914-963A-723B123E5CF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF8804D7-370C-4914-963A-723B123E5CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF8804D7-370C-4914-963A-723B123E5CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF8804D7-370C-4914-963A-723B123E5CF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +73,8 @@ Global
 		{CD8D08BC-2CF8-4659-A750-8B7CE1B64085} = {390C0213-05BE-4FEE-8CE6-29B1A2D26B06}
 		{736E33BA-CCED-4E89-B1EC-FF7E4C75F8CC} = {C4158DBC-C486-4D3D-AAA4-D34964FAB930}
 		{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563} = {390C0213-05BE-4FEE-8CE6-29B1A2D26B06}
+		{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF} = {C4158DBC-C486-4D3D-AAA4-D34964FAB930}
+		{FF8804D7-370C-4914-963A-723B123E5CF9} = {390C0213-05BE-4FEE-8CE6-29B1A2D26B06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14716A14-D4D3-4F86-ACCA-80777A692904}
