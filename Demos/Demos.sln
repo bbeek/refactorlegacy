@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Day 1", "Day 1", "{C4158DBC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceConditionalWithPolymorphism", "ReplaceConditionalWithPolymorphism\ReplaceConditionalWithPolymorphism.csproj", "{DD5D1840-FC60-4796-A460-9A9322BDAFF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceConditionalWithPolymorphismTests", "ReplaceConditionalWithPolymorphismTests\ReplaceConditionalWithPolymorphismTests.csproj", "{CD8D08BC-2CF8-4659-A750-8B7CE1B64085}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceConditionalWithPolymorphismTests", "Tests\ReplaceConditionalWithPolymorphismTests\ReplaceConditionalWithPolymorphismTests.csproj", "{CD8D08BC-2CF8-4659-A750-8B7CE1B64085}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceLoopWithPipeline", "ReplaceLoopWithPipeline\ReplaceLoopWithPipeline.csproj", "{736E33BA-CCED-4E89-B1EC-FF7E4C75F8CC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceLoopWithPipelineTests", "ReplaceLoopWithPipelineTests\ReplaceLoopWithPipelineTests.csproj", "{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceLoopWithPipelineTests", "Tests\ReplaceLoopWithPipelineTests\ReplaceLoopWithPipelineTests.csproj", "{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitLoop", "SplitLoop\SplitLoop.csproj", "{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF}"
 EndProject
