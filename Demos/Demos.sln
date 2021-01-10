@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitPhase", "SplitPhase\Sp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{390C0213-05BE-4FEE-8CE6-29B1A2D26B06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitPhaseTests", "Tests\SplitPhaseTests\SplitPhaseTests.csproj", "{388CAD0E-4BAA-4345-8FEB-18BC13A72983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitPhaseTests", "Tests\SplitPhaseTests\SplitPhaseTests.csproj", "{388CAD0E-4BAA-4345-8FEB-18BC13A72983}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Day 1", "Day 1", "{C4158DBC-C486-4D3D-AAA4-D34964FAB930}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +30,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{967B141D-F96F-43AF-9A31-1E5063FFA2A0} = {C4158DBC-C486-4D3D-AAA4-D34964FAB930}
+		{390C0213-05BE-4FEE-8CE6-29B1A2D26B06} = {C4158DBC-C486-4D3D-AAA4-D34964FAB930}
 		{388CAD0E-4BAA-4345-8FEB-18BC13A72983} = {390C0213-05BE-4FEE-8CE6-29B1A2D26B06}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
