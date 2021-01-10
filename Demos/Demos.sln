@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitPhase", "SplitPhase\SplitPhase.csproj", "{967B141D-F96F-43AF-9A31-1E5063FFA2A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{390C0213-05BE-4FEE-8CE6-29B1A2D26B06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitPhaseTests", "Tests\SplitPhaseTests\SplitPhaseTests.csproj", "{388CAD0E-4BAA-4345-8FEB-18BC13A72983}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{967B141D-F96F-43AF-9A31-1E5063FFA2A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{967B141D-F96F-43AF-9A31-1E5063FFA2A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{967B141D-F96F-43AF-9A31-1E5063FFA2A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{967B141D-F96F-43AF-9A31-1E5063FFA2A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{388CAD0E-4BAA-4345-8FEB-18BC13A72983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{388CAD0E-4BAA-4345-8FEB-18BC13A72983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{388CAD0E-4BAA-4345-8FEB-18BC13A72983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{388CAD0E-4BAA-4345-8FEB-18BC13A72983}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{388CAD0E-4BAA-4345-8FEB-18BC13A72983} = {390C0213-05BE-4FEE-8CE6-29B1A2D26B06}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14716A14-D4D3-4F86-ACCA-80777A692904}
+	EndGlobalSection
+EndGlobal
