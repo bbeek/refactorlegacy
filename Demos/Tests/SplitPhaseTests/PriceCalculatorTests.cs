@@ -1,6 +1,6 @@
 using FluentAssertions;
-using NUnit.Framework;
 using SplitPhase;
+using Xunit;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +9,7 @@ namespace SplitPhaseTests
     public class PriceCalculatorTests
     {
         
-        [Test]
+        [Fact]
         public void CalculatePrice_order_containing_single_whiskey_should_return_expected_price()
         {
             const string order = "-Whiskey 1";
@@ -21,7 +21,7 @@ namespace SplitPhaseTests
             outcome.Should().Be(expectedPrice);
         }
 
-        [Test]
+        [Fact]
         public void CalculatePrice_order_containing_multiple_beers_should_return_expected_price()
         {
             const string order = "-Beer 3";
@@ -33,7 +33,7 @@ namespace SplitPhaseTests
             outcome.Should().Be(expectedPrice);
         }
 
-        [Test]
+        [Fact]
         public void CalculatePrice_order_containing_unknown_product_should_throw_keynotfound()
         {
             const string order = "-Fanta 3";
@@ -44,7 +44,7 @@ namespace SplitPhaseTests
             act.Should().Throw<KeyNotFoundException>();
         }
 
-        [Test]
+        [Fact]
         public void CalculatePrice_order_without_spaces_should_throw_keynotfound()
         {
             const string order = "-Beer3";
@@ -55,7 +55,7 @@ namespace SplitPhaseTests
             act.Should().Throw<KeyNotFoundException>();
         }
 
-        [Test]
+        [Fact]
         public void CalculatePrice_order_without_markup_should_throw_indexoutofrange()
         {
             const string order = "Beer 3";
