@@ -19,7 +19,6 @@ namespace SplitPhase
  * for each parameter, move to intermediate data structure.
  * extract first method
  */
-
         public decimal Calculate(string order)
         {
             var orderData = order.Split(" ");
@@ -28,5 +27,4 @@ namespace SplitPhase
             return orderPrice;
         }
     }
-
 }

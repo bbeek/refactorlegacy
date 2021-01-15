@@ -6,7 +6,7 @@
             {
                 decimal thisAmount = rental.Movie.Price;
 
-                // Calculate 
+                // Calculate amount due
                 if (rental.DaysRented > 2)
                 {
                     thisAmount += (rental.DaysRented - 2) * 1.5m;
@@ -25,13 +25,13 @@
                 result.AppendLine("\t" + rental.Movie.Title + "\t" + thisAmount.ToString());
                 totalAmount += thisAmount;
             }
-
+            
             // determine amounts for each line
             foreach (var rental in Rentals)
             {
                 decimal thisAmount = rental.Movie.Price;
 
-                // Calculate 
+                // Calculate amount due
                 if (rental.DaysRented > 2)
                 {
                     thisAmount += (rental.DaysRented - 2) * 1.5m;
@@ -53,8 +53,10 @@
 ```
 
 2. Identify and remove duplicate side effects
+Using our unittests, we can identify all side-effect. As added benefit, this gives us the opportunity to verify our unittests
+
 Now the frequent renter points and the total amount is calculated twice.
-So let's decide that the first loop will calculate the frequent renter points and the second loop will calcalute the total amount.
+So let's decide that the first loop will calculate the frequent renter points and the second loop will calculate the total amount.
 
 Thus remove the duplicate side effects from the first and second loop:
 
@@ -76,7 +78,7 @@ Thus remove the duplicate side effects from the first and second loop:
             {
                 decimal thisAmount = rental.Movie.Price;
 
-                // Calculate 
+                // Calculate amount due
                 if (rental.DaysRented > 2)
                 {
                     thisAmount += (rental.DaysRented - 2) * 1.5m;
@@ -89,7 +91,82 @@ Thus remove the duplicate side effects from the first and second loop:
 ```
 
 3. Test
-And we are done with this refactoring.
+And we are done with this first refactoring.
+(Depending on time, show when less then 1 hour elapsed)
+However while identify the side-effects we also saw a third side-effect, namely `result.AppendLine("\t" + rental.Movie.Title + "\t" + thisAmount.ToString());`
+
+Let's again apply the Split Loop refactoring
+
+```
+            foreach (var rental in Rentals)
+            {
+                decimal thisAmount = rental.Movie.Price;
+
+                // Calculate amount due
+                if (rental.DaysRented > 2)
+                {
+                    thisAmount += (rental.DaysRented - 2) * 1.5m;
+                }
+
+                totalAmount += thisAmount;
+            }
+
+            foreach (var rental in Rentals)
+            {
+                decimal thisAmount = rental.Movie.Price;
+                
+                // Calculate amount due
+                if (rental.DaysRented > 2)
+                {
+                    thisAmount += (rental.DaysRented - 2) * 1.5m;
+                }
+
+                // show figures for this rental
+                result.AppendLine("\t" + rental.Movie.Title + "\t" + thisAmount.ToString());
+            }
+```
+
+This does however duplicate some code for calculating the amount due.
+So let's use the `extract method` refactoring.
+
+
+```
+            foreach (var rental in Rentals)
+            {
+                decimal thisAmount = CalculateAmountDue(rental);
+                
+                // show figures for this rental
+                result.AppendLine("\t" + rental.Movie.Title + "\t" + thisAmount.ToString());
+            }
+```
+
+```
+        private static decimal CalculateAmountDue(Rental rental)
+        {
+            decimal thisAmount = rental.Movie.Price;
+
+            // Calculate amount due
+            if (rental.DaysRented > 2)
+            {
+                thisAmount += (rental.DaysRented - 2) * 1.5m;
+            }
+
+            return thisAmount;
+        }
+```
+
+and manually replace the second duplication:
+
+```
+            foreach (var rental in Rentals)
+            {
+                decimal thisAmount = CalculateAmountDue(rental);
+
+                totalAmount += thisAmount;
+            }
+```
+
+
 
 4. Optional: Extract function
 First using slide statement, move the variable declarations closer to the loops:
@@ -112,17 +189,17 @@ First using slide statement, move the variable declarations closer to the loops:
             decimal totalAmount = 0;
             foreach (var rental in Rentals)
             {
-                decimal thisAmount = rental.Movie.Price;
+                decimal thisAmount = CalculateAmountDue(rental);
 
-                // Calculate 
-                if (rental.DaysRented > 2)
-                {
-                    thisAmount += (rental.DaysRented - 2) * 1.5m;
-                }
+                totalAmount += thisAmount;
+            }
 
+            foreach (var rental in Rentals)
+            {
+                decimal thisAmount = CalculateAmountDue(rental);
+                
                 // show figures for this rental
                 result.AppendLine("\t" + rental.Movie.Title + "\t" + thisAmount.ToString());
-                totalAmount += thisAmount;
             }
 ```
 
@@ -155,71 +232,6 @@ Then extract method on first loop:
 Consider inlining the method call (using the refactor action "Inline temporary variable")
 ```
         result.AppendFormat("You earned {0} frequent renter points", GetFrequentRenterPoints());
-```
-
-For the second loop, notice that it still does 2 things, namely calculating the total amount by adding up each movie amount and listing the movie with amount.
-So, let's first extract the method for calculating the movie amount:
-
-```
-            foreach (var rental in Rentals)
-            {
-                decimal thisAmount = CalculateAmountDue(rental);
-
-                // show figures for this rental
-                result.AppendLine("\t" + rental.Movie.Title + "\t" + thisAmount.ToString());
-                totalAmount += thisAmount;
-            }
-```
-
-```
-    
-        private static decimal CalculateAmountDue(Rental rental)
-        {
-            decimal thisAmount = rental.Movie.Price;
-
-            // Calculate 
-            if (rental.DaysRented > 2)
-            {
-                thisAmount += (rental.DaysRented - 2) * 1.5m;
-            }
-
-            return thisAmount;
-        }
-```
-
-Then apply split loop on the loop:
-
-From:
-```
-            decimal totalAmount = 0;
-            foreach (var rental in Rentals)
-            {
-                decimal thisAmount = CalculateAmountDue(rental);
-
-                // show figures for this rental
-                result.AppendLine("\t" + rental.Movie.Title + "\t" + thisAmount.ToString());
-                totalAmount += thisAmount;
-            }
-```
-
-To:
-```         
-            // determine amounts for each line
-            decimal totalAmount = 0;
-            foreach (var rental in Rentals)
-            {
-                decimal thisAmount = CalculateAmountDue(rental);
-
-                totalAmount += thisAmount;
-            }
-            
-            foreach (var rental in Rentals)
-            {
-                decimal thisAmount = CalculateAmountDue(rental);
-
-                // show figures for this rental
-                result.AppendLine("\t" + rental.Movie.Title + "\t" + thisAmount.ToString());
-            }
 ```
 
 Test and extract method:

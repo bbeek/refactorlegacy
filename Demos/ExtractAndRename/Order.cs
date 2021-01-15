@@ -31,8 +31,7 @@ namespace ExtractAndRename
                 Math.Max(0m, quantity - 500) * itemPrice * 0.05m +
                 Math.Min(quantity * itemPrice * 0.1m, 100);
 
-            return banner + @$"
-Name: {customerName}
+            return banner + @$"Name: {customerName}
 Amount: {outstanding}";
         }
 

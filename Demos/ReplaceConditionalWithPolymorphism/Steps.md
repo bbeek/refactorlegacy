@@ -143,6 +143,16 @@ EuropeanSwallow.cs
 
 4. Repeat:
 
+AfricanSwallow.cs
+```
+        public override int GetAirSpeed()
+        {
+            return 40 - 2 * properties.NumberOfCoconuts;
+        }
+```
+
+5. Repeat:
+
 NorwegianBlueParrot.cs
 ```
 
@@ -152,7 +162,7 @@ NorwegianBlueParrot.cs
         }
 ```
 
-5. Adjust function is superclass (consider making superclass abstract)
+6. Adjust function is superclass (consider making superclass abstract)
 
 Bird.cs
 

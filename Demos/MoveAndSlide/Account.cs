@@ -15,9 +15,6 @@ namespace MoveAndSlide
         public int DaysOverdrawn { get; }
 
         /*
-         * Slide statement:
-         *      Move related code together
-         * 
          * Move function:
          *   1. Check all calling functions, see if those also need to move (if so, move them first)
          *   2. Check that the function is not polymorphic
@@ -28,37 +25,32 @@ namespace MoveAndSlide
          */
         public decimal GetBankCharge()
         {
-            var premiumOverdraft = 0m;
-            if (accountType.IsPremium)
-            {
-                premiumOverdraft = 10m;
-
-                if (DaysOverdrawn > 7)
-                {
-                    premiumOverdraft += (DaysOverdrawn - 7) * 0.85m;
-                }
-            }
-
-            decimal result;
+            var result = 4.5m;
             if (DaysOverdrawn > 0)
             {
-                result = 4.5m;
-                if (premiumOverdraft > 0)
-                {
-                    result += premiumOverdraft;
-                }
-                else
-                {
-                    result += DaysOverdrawn * 1.75m;
-                }
+                result += GetOverdraftCharge();
             }
-            else
-            {
-                result = 4.5m;
-            }
-           
+
+
             return result;
         }
 
+        private decimal GetOverdraftCharge()
+        {
+            if (accountType.IsPremium)
+            {
+                const decimal baseCharge = 10m;
+
+                if (DaysOverdrawn > 7)
+                {
+                    return baseCharge + (DaysOverdrawn - 7) * 0.85m;
+                }
+                return baseCharge;
+            }
+            else
+            {
+                return DaysOverdrawn * 1.75m;
+            }
+        }
     }
 }

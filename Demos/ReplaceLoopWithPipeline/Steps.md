@@ -104,7 +104,7 @@ And test!
 ```
 
 And test!
-Test breaks as the "List" was apparently also a behaviour.
+Test breaks as the "List" was apparently also a behaviour, due to `deferred execution` feature of Linq queries
 So let's add that behaviour
 
 ```
@@ -137,3 +137,5 @@ And test again!
 ```
 
 (Possibly end with comparison of end result via Git)
+
+Note that the whole loop is still only executed once because of the `deferred execution` feature in LINQ
