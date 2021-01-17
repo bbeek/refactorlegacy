@@ -30,14 +30,14 @@ namespace TheatricalPlays
                 totalAmount += AmountFor(perf);
             }
 
-            var discountPercentage = Math.Min(30, (TotalVolumeCredits(invoice) / 10));
+            var discountPercentage = Math.Min(30, (GetTotalVolumeCredits(invoice) / 10));
             totalAmount -= totalAmount * (discountPercentage / 100m);
             result.AppendLine($"Amount owed is {(totalAmount / 100).ToString("C", format)}");
-            result.Append($"You earned {TotalVolumeCredits(invoice)} credits");
+            result.Append($"You earned {GetTotalVolumeCredits(invoice)} credits");
             return result.ToString();
         }
 
-        private int TotalVolumeCredits(Invoice invoice)
+        private int GetTotalVolumeCredits(Invoice invoice)
         {
             var volumeCredits = 0;
             foreach (var perf in invoice.Performances)

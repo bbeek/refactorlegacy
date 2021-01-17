@@ -25,8 +25,8 @@ namespace TheatricalPlays
                 result.AppendLine($" ({perf.Audience} seats)");
             }
 
-            result.AppendLine($"Amount owed is {Usd(TotalAmount(invoice))}");
-            result.Append($"You earned {TotalVolumeCredits(invoice)} credits");
+            result.AppendLine($"Amount owed is {Usd(GetTotalAmount(invoice))}");
+            result.Append($"You earned {GetTotalVolumeCredits(invoice)} credits");
             return result.ToString();
         }
 
@@ -35,7 +35,7 @@ namespace TheatricalPlays
             return (amount / 100).ToString("C", new CultureInfo("en-US"));
         }
 
-        private decimal TotalAmount(Invoice invoice)
+        private decimal GetTotalAmount(Invoice invoice)
         {
             decimal totalAmount = 0;
             foreach (var perf in invoice.Performances)
@@ -43,12 +43,12 @@ namespace TheatricalPlays
                 totalAmount += AmountFor(perf);
             }
 
-            var discountPercentage = Math.Min(30, (TotalVolumeCredits(invoice) / 10));
+            var discountPercentage = Math.Min(30, (GetTotalVolumeCredits(invoice) / 10));
             totalAmount -= totalAmount * (discountPercentage / 100m);
             return totalAmount;
         }
 
-        private int TotalVolumeCredits(Invoice invoice)
+        private int GetTotalVolumeCredits(Invoice invoice)
         {
             var volumeCredits = 0;
             foreach (var perf in invoice.Performances)
