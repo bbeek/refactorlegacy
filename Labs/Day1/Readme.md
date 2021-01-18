@@ -515,4 +515,88 @@ As such:
             return new EnrichedPerformance(calculator.Performance, calculator.Play, AmountFor(performance), VolumeCreditsFor(performance));
         }
 ```
+Compile-test-commit
 
+## Moving functions into calculator
+With all the required properties now available in the calculator class, we have made it possible to encapsulate the logic for the amount calculation within the class.
+Using the **Move Function** refactoring, we first copy the whole `AmountFor` method in `PerformanceCalculator`.
+Then adjust to function to its new context, first changing the `performance` parameter with the **Rename Variable** refactoring into `Performance` 
+followed by a removal of the `Performance` parameter. And we manually replace 'PlayFor' with a call to `this.Play`.
+
+Next, change the accessibility to `public virtual` (The `virtual` keyword is added as we know we will want to override this function later).
+Finally change the function name to a more descriptive `GetAmount`.
+After verifying that the solution compiles, we move on to the step of the **Move function** refactoring: calling the new function in the source function.
+Update the `AmountFor` method so that it uses the moved function, as per below:
+```c#
+        private int AmountFor(Performance performance)
+        {
+            return new PerformanceCalculator() { Performance = performance, Play = PlayFor(performance) }.GetAmount();
+        }
+```
+Test that the refactoring was successful. (Compile-test-commit)
+As the `AmountFor` method is only used once, apply the **Inline function** refactoring on this method.
+Compile-test-commit.
+
+Repeat the same process for volume credits, naming the copied function `GetVolumeCredits`.
+Compile-test-commit.
+
+## Making polymorphic
+With all logic in one class, we can move on to create the inheritance structure.
+As we can tell from the code in `PerformanceCalculator`, we need two override classes for the various types of play supported.
+
+Add new classes `ComedyCalculator` and `TragedyCalculator`, both of which inherit from `PerformanceCalculator`.
+
+With this we've setup the required inheritance structure and we can move on to the first step of the **Replace Conditional with Polymorphism**:
+1. Create a factory function. 
+> Here we can use Factory Method Design Pattern
+Begin by extracting the current creation of a `PerformanceCalculator` into a new method using **Extract Method**.
+Name this function `CreatePerformanceCalculator`.
+
+Then extend this function with the creation of the sub-types, based on the play type.
+```c#
+        private PerformanceCalculator CreatePerformanceCalculator(Performance performance, Play play)
+        {
+            switch (play.Type)
+            {
+                case PlayType.Comedy: return new ComedyCalculator { Performance = performance, Play = play };
+                case PlayType.Tragedy: return new TragedyCalculator { Performance = performance, Play = play };
+                default: throw new Exception($"unknown type: {play.Type}");
+            }
+        }
+```
+
+2. Move conditional code to superclass. As we already performed this step with setting up `PerformanceCalculator`, we skip this step.
+
+3. Take a subclass, create override method for the conditional logic and move the conditional logic into the subclass. Adjust to fit the new context.
+We will begin with the `TragedyCalculator`. Create the override method by using the Visual Studio feature "generate overrides".
+Set the caret on "TragedyCalculator" in the cs file. Bring up the quick actions menu and select the option "Generate overrides...".
+In the dialog, only select the method `GetAmount` and press OK.
+Move the logic from the superclass to the `TragedyCalculator.GetAmount` and just to be extra paranoid throw a `NotImplementedException` in the "Tragedy" leg of `PerformanceCalculator.GetAmount`
+Compile-test-commit.
+
+4. Repeat for each conditional.
+Apply the same process on the `GetAmount` method for the `ComedyCalculator`.
+Compile-test-commit.
+And with that, we reach the last step of the refactoring:
+
+5. Change the method in the superclass.
+As there is no default calculation for the amount, we want to signal our future self (or colleagues) that this is the responsibility of a subclass
+by throwing a `NotImplementedException`.
+```c#
+        public virtual int GetAmount() => throw new NotImplementedException("subclass responsibility");
+```
+Compile-test-commit.
+
+However as we are not yet ready with moving all conditionals, repeat step 4 and 5 for `GetVolumeCredits` for `ComedyCalculator`.
+Do note that there is a default implementation on the superclass.
+Compile-test-commit.
+
+Your `TheatricalPlays` project should look something like the one in folder `src\05 Calculations per type`
+
+# Done!
+=========
+As you've just experienced yourself, with an systematic approach, we are able to safely improve the design and readability of existing code without breaking external behavior.
+If we take a second look at `EnrichedPerformance` then we will notice that all the data in this intermediate data-structure is also encapsulated in `PerformanceCalculator` and its subclasses.
+As a last exercise, see if you can change the `GetAmount` and `GetVolumeCredits` method into properties (hint: use the quick actions) and afterwards if you can safely remove the `EnrichedPerformance` class.
+
+For an idea how the project could like after the removal and some re-structuring and inlining, see `src\06 Optional`
