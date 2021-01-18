@@ -28,10 +28,10 @@ namespace TheatricalPlays
                 // add volume credits
                 volumeCredits += Math.Max(perf.Audience - 30, 0);
                 // add extra credit for every ten comedy attendees
-                if (PlayType.Comedy == PlaysFor(perf).Type) volumeCredits += (int)Math.Floor((decimal)perf.Audience / 5);
+                if (PlayType.Comedy == PlayFor(perf).Type) volumeCredits += (int)Math.Floor((decimal)perf.Audience / 5);
 
                 // print line for this order
-                result.Append($"  {this.PlaysFor(perf).Name}: {(AmountFor(perf) / 100).ToString("C", format)}");
+                result.Append($"  {this.PlayFor(perf).Name}: {(AmountFor(perf) / 100).ToString("C", format)}");
                 result.AppendLine($" ({perf.Audience} seats)");
                 totalAmount += AmountFor(perf);
             }
@@ -43,7 +43,7 @@ namespace TheatricalPlays
             return result.ToString();
         }
 
-        private Play PlaysFor(Performance perf)
+        private Play PlayFor(Performance perf)
         {
             return plays[perf.PlayId];
         }
@@ -52,7 +52,7 @@ namespace TheatricalPlays
         {
             int result;
 
-            switch (PlaysFor(performance).Type)
+            switch (PlayFor(performance).Type)
             {
                 case PlayType.Tragedy:
                     result = 40000;
@@ -67,7 +67,7 @@ namespace TheatricalPlays
                     break;
 
                 default:
-                    throw new Exception($"unknown type: {PlaysFor(performance).Type}");
+                    throw new Exception($"unknown type: {PlayFor(performance).Type}");
             }
 
             return result;

@@ -21,7 +21,7 @@ namespace TheatricalPlays
             foreach (var perf in invoice.Performances)
             {
                 // print line for this order
-                result.Append($"  {PlaysFor(perf).Name}: {Usd(AmountFor(perf))}");
+                result.Append($"  {PlayFor(perf).Name}: {Usd(AmountFor(perf))}");
                 result.AppendLine($" ({perf.Audience} seats)");
             }
 
@@ -63,12 +63,12 @@ namespace TheatricalPlays
         {
             var result = 0;
             result += Math.Max(performance.Audience - 30, 0);
-            if (PlayType.Comedy == PlaysFor(performance).Type) result += (int)Math.Floor((decimal)performance.Audience / 5);
+            if (PlayType.Comedy == PlayFor(performance).Type) result += (int)Math.Floor((decimal)performance.Audience / 5);
 
             return result;
         }
 
-        private Play PlaysFor(Performance perf)
+        private Play PlayFor(Performance perf)
         {
             return plays[perf.PlayId];
         }
@@ -77,7 +77,7 @@ namespace TheatricalPlays
         {
             int result;
 
-            switch (PlaysFor(performance).Type)
+            switch (PlayFor(performance).Type)
             {
                 case PlayType.Tragedy:
                     result = 40000;
@@ -92,7 +92,7 @@ namespace TheatricalPlays
                     break;
 
                 default:
-                    throw new Exception($"unknown type: {PlaysFor(performance).Type}");
+                    throw new Exception($"unknown type: {PlayFor(performance).Type}");
             }
 
             return result;
