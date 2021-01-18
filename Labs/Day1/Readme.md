@@ -1,5 +1,5 @@
 # Refactoring "TheatricalPlays"
-===============================
+===
 Background: 
 
 This project contains a bill generator for a theatrical company.
@@ -20,7 +20,7 @@ In another JSON file are the performances stored that were performed for a custo
 * Visual Studio 2019 v16.8+ 
 
 # Goal
-======
+===
 The company wants to perform more types of plays. 
 They hope to perform: historical, pastoral, pastoral-comical, historical-pastoral, tragical-comical-historical-pastoral and poem unlimited
 Although the pricing structure and the volume credit calculations are not fully worked out, it appears that this will be under subject of change in the near future.
@@ -34,13 +34,13 @@ Or, first refactor the current implementation to a improved design more suitable
 In this lab we are going to perform the steps needed for the latter (of course :))
 
 # First steps
-=============
+===
 ## Extract function
 As a first step, let's begin by extracting functionality from the current long `Statement` function.
 The `switch` statement related to calculating the charge of a performance is a good start as it is performs 1 thing that we can return in a method.
 
 So we are going to perform a **Extract Method** on this statement.
-Select line 22 till 45 in `BillGenerator.cs` and apply the **Extract method** refactoring from Visual Studio (either via Edit > Refactor > Extract Method or using the Ctrl+. "quick actions" > Extract )
+Select line 22 till 45 in `BillGenerator.cs` and apply the **Extract method** refactoring from Visual Studio (either via Edit > Refactor > Extract Method or using the Ctrl+. "quick actions" > Extract ).
 And name the newly extracted function `AmountFor`. (We can always rename it later to a more suitable name).
 We finish the first refactoring by running our unittests to verify that we did not break anything and committing the first change
 
@@ -96,7 +96,7 @@ As a final refactoring during this step, apply the **Inline variable** refactori
 Your `BillGenerator` class should look something like the one in folder `src\01 First Steps`
 
 # Extracting Volume Credits
-============================
+===
 Next we want to extract the `volumeCredits` calculation from the foreach loop.
 Unfortunately due to `volumeCredits` accumulator, we cannot rely on the automated "Extract method" functionality.
 Instead we are going to perform the **Extract Method** refactoring manually. 
@@ -176,9 +176,9 @@ After compiling, testing and committing; apply **Inline variable** on `volumeCre
 Your `BillGenerator` class should look something like the one in folder `src\02 Extract Volume Credits`
 
 # More extractions
-==================
+===
 In order to remove the variable `totalAmount` we can use the same steps as before.
-First **Split loop* on the first foreach loop.
+First **Split loop** on the first foreach loop.
 After this refactoring it should look like below:
 ```c#
             foreach (var perf in invoice.Performances)
@@ -231,7 +231,7 @@ As a final refactoring in this part, **Inline variable** on `format` in `Usd`
 Your `BillGenerator` class should look something like the one in folder `src\03 More extractions`
 
 # Split phase and adding render HTML
-====================================
+===
 So far, we worked on bringing structure onto the original function so that we can easily understand the various parts.
 In order to add the HTML support, we could stop now, just copy the seven or so lines remaining in `Statement`, create an HTML variant and call it a day.
 This does mean however that the logic for what is required to generate a bill is still duplicated.
@@ -263,6 +263,7 @@ So, we start the process of moving data required for the second phase into the i
 We begin by moving the Customer data into the `StatementData` class. First add `public string Customer { get; init; }` to the `StatementData` class.
 > **Note** that we enforce encapsulation to the data by only allowing the name to be set with the constructor by specifying the new **_.Net 5 `init` accessibility modifier_**.
 > This defaults into a `private set` without a need for a parameterized constructor and thus ensuring immutability
+
 Change the usage from `invoice.Customer` within `RenderPlainText` into `data.Customer` and add `invoice.Customer` as parameter of the `new StatementData` call.
 Compile-test-commit.
 
@@ -468,7 +469,7 @@ Easy.
 Your `TheatricalPlays` project should look something like the one in folder `src\04 Split Phase`
 
 # Calculations by type
-======================
+===
 Now that we've added the first request, we'll turn our attention to the second feature request: Supporting more categories of plays, each with its own cost and credits calculation.
 As it currently stands, we would have to add more switch statements and conditionals onto `AmountFor` and `VolumeCreditsFor` in order to facilitate such a request, 
 which is not the direction we want to go for.
@@ -594,7 +595,7 @@ Compile-test-commit.
 Your `TheatricalPlays` project should look something like the one in folder `src\05 Calculations per type`
 
 # Done!
-=========
+===
 As you've just experienced yourself, with an systematic approach, we are able to safely improve the design and readability of existing code without breaking external behavior.
 If we take a second look at `EnrichedPerformance` then we will notice that all the data in this intermediate data-structure is also encapsulated in `PerformanceCalculator` and its subclasses.
 As a last exercise, see if you can change the `GetAmount` and `GetVolumeCredits` method into properties (hint: use the quick actions) and afterwards if you can safely remove the `EnrichedPerformance` class.
