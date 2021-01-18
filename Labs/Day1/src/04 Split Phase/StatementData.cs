@@ -9,16 +9,10 @@ namespace TheatricalPlays
 {
     class StatementData
     {
-        public string Customer { get; }
-        public ImmutableList<EnrichedPerformance> Performances { get; }
+        public string Customer { get; init; }
+        public ImmutableList<EnrichedPerformance> Performances { get; init; }
         public decimal TotalAmount => GetTotalAmount();
         public int TotalVolumeCredits => GetTotalVolumeCredits();
-
-        public StatementData(string customer, ImmutableList<EnrichedPerformance> performances)
-        {
-            Customer = customer;
-            Performances = performances;
-        }
 
         private decimal GetTotalAmount()
         {

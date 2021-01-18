@@ -8,9 +8,9 @@ namespace TheatricalPlays
 {
     record EnrichedPerformance : Performance
     {
-        public Play Play { get; init; }
-        public int Amount { get; init; }
-        public int VolumeCredits { get; init; }
+        public Play Play { get; }
+        public int Amount { get; }
+        public int VolumeCredits { get; }
 
         internal EnrichedPerformance(Performance original, Play play, int amount, int volumeCredits) : base(original)
         {

@@ -1,4 +1,5 @@
 # Refactoring "TheatricalPlays"
+===============================
 Background: 
 
 This project contains a bill generator for a theatrical company.
@@ -19,6 +20,7 @@ In another JSON file are the performances stored that were performed for a custo
 * Visual Studio 2019 v16.8+ 
 
 # Goal
+======
 The company wants to perform more types of plays. 
 They hope to perform: historical, pastoral, pastoral-comical, historical-pastoral, tragical-comical-historical-pastoral and poem unlimited
 Although the pricing structure and the volume credit calculations are not fully worked out, it appears that this will be under subject of change in the near future.
@@ -32,6 +34,7 @@ Or, first refactor the current implementation to a improved design more suitable
 In this lab we are going to perform the steps needed for the latter (of course :))
 
 # First steps
+=============
 ## Extract function
 As a first step, let's begin by extracting functionality from the current long `Statement` function.
 The `switch` statement related to calculating the charge of a performance is a good start as it is performs 1 thing that we can return in a method.
@@ -97,14 +100,14 @@ Next we want to extract the `volumeCredits` calculation from the foreach loop.
 Unfortunately due to `volumeCredits` accumulator, we cannot rely on the automated "Extract method" functionality.
 Instead we are going to perform the **Extract Method** refactoring manually. 
 First create a new method named `VolumeCreditsFor`:
-```
+```c#
 private int VolumeCreditsFor(Performance perf)
 {
 
 }
 ```
 Then copy the volume credit calculation block into `VolumeCreditsFor`:
-```
+```c#
 private int VolumeCreditsFor(Performance perf)
 {
     // add volume credits
@@ -114,7 +117,7 @@ private int VolumeCreditsFor(Performance perf)
 }
 ```
 Add the missing variable to resolve the compiler errors and return it:
-```
+```c#
 private int VolumeCreditsFor(Performance perf)
 {
     var volumeCredits = 0;
@@ -128,7 +131,7 @@ private int VolumeCreditsFor(Performance perf)
 ```
 
 Replace to copied code with a call to `VolumeCreditsFor`:
-```
+```c#
             foreach (var perf in invoice.Performances)
             {
                 volumeCredits += VolumeCreditsFor(perf);
@@ -140,7 +143,7 @@ renaming `volumeCredits` to result and `perf` to `performance` with a compile-te
 
 Next we are going to remove the `volumeCredits` from `Statement`.
 As it is nested in the foreach loop, we are going to apply the **Split Loop** refactoring (see slides)
-```
+```c#
             foreach (var perf in invoice.Performances)
             {
                 // print line for this order
@@ -157,7 +160,7 @@ As it is nested in the foreach loop, we are going to apply the **Split Loop** re
 Compile-test-commit
 
 Then using **Slide Statements** (see hidden slide 20) move the declaration of the `volumeCredits` variable before the loop:
-```
+```c#
             var volumeCredits = 0;
             foreach (var perf in invoice.Performances)
             {
@@ -175,7 +178,7 @@ Your `BillGenerator` class should look something like the one in folder `src\02 
 In order to remove the variable `totalAmount` we can use the same steps as before.
 First **Split loop* on the first foreach loop.
 After this refactoring it should look like below:
-```
+```c#
             foreach (var perf in invoice.Performances)
             {
                 // print line for this order
@@ -209,8 +212,7 @@ Given that this method will format an amount into USD, we could name it as `Form
 ```
 
 Next, move the code related to the amount formatting in the new function:
-```
-
+```c#
         private string Usd(decimal amount)
         {
             IFormatProvider format = new CultureInfo("en-US");
@@ -239,7 +241,7 @@ And lastly, extracting the first phase.
 Given that the second phase of the `Statement` function is that of rendering the plaintext bill, we begin by applying the **Extract method** on all the lines in `Statement`.
 And we're going to give this method a name descriptive of the second phase, so let's name it: `RenderPlainText`.
 Now `Statement` function should look like this:
-```
+```c#
         public string Statement(Invoice invoice)
         {
             return RenderPlainText(invoice);
@@ -255,24 +257,23 @@ Create a new variable `statementData` in `Statement` and pass it into the `Rende
 Now the solution should be in a compilable state.
 So, we start the process of moving data required for the second phase into the intermediate data structure.
 
-We begin by moving the Customer data into the `StatementData` class. First add `public string Customer { get; }` to the `StatementData` class.
-_Note that we enforce encapsulation to the data by only allowing the name to be set with the constructor by not specifying the set accessibility. _
-_This defaults into a `private set` and thus ensuring immutability_
-Generate the constructor for `StatementData` to be able to set the `Customer` property using Visual Studio. Place the caret on "Customer", bring up the quick actions menu and select "Generate constructor 'StatementData(string)'".
+We begin by moving the Customer data into the `StatementData` class. First add `public string Customer { get; init; }` to the `StatementData` class.
+> **Note** that we enforce encapsulation to the data by only allowing the name to be set with the constructor by specifying the new **_.Net 5 `init` accessibility modifier_**.
+> This defaults into a `private set` without a need for a parameterized constructor and thus ensuring immutability
 Change the usage from `invoice.Customer` within `RenderPlainText` into `data.Customer` and add `invoice.Customer` as parameter of the `new StatementData` call.
 Compile-test-commit.
 
 The `Statement` method should now look something like this:
-```
+```c#
         public string Statement(Invoice invoice)
         {
-            var statementData = new StatementData(invoice.Customer);
+            var statementData = new StatementData{ Customer = invoice.Customer };
             
             return RenderPlainText(invoice, statementData);
         }
 ```
 And the first few lines of `RenderPlainText` should now look like this:
-```
+```c#
         private string RenderPlainText(Invoice invoice, StatementData data)
         {
             var result = new StringBuilder().AppendLine($"Statement for {data.Customer}");
@@ -282,8 +283,7 @@ And the first few lines of `RenderPlainText` should now look like this:
 
 We repeat the same process for the `Performances` property. 
 Because we want to be sure that this list does not change while we query it, we are going to make the new property of type `ImmutableList`.
-Like so: `public ImmutableList<Performance> Performances { get; }`. And if we place the caret again somewhere on the "Performances" we can use Visual Studio to add this as a new constructor argument.
-Bring up the quick actions context menu and select "Add parameters to StatementData(string)".
+Like so: `public ImmutableList<Performance> Performances { get; init;}`. 
 Ensure that the updated constructor is called with the correct parameters within `Statement` and that the foreach loop in `RenderPlainText` now uses `data.Performances`.
 Compile-test-commit.
 
@@ -312,10 +312,10 @@ Finally we can also remove the `invoice` parameter from `RenderPlainText`. Again
 The next thing we want to move into the intermediate data structure is the retrieval of the play for each performance.
 This points us towards yet another intermediate data structure, namely one that encapsulates an enriched performance object.
 
-Add a new class named `EnrichedPerformance` that inherits from `Performance`. Given that we are using the new .Net 5 record functionality, we need to change `class` into `record`.
+Add a new class named `EnrichedPerformance` that inherits from `Performance`. Given that we are using the new **_.Net 5 record functionality_**, we need to change `class` into **`record`**.
 and create a internal constructor for `EnrichedPerformance` that takes a `Performance` as parameter.
 Hint: use the quick actions context menu on EnrichedPerformance to create this constructor and manually change the accessibility from `protected` to `internal`
-```
+```c#
 namespace TheatricalPlays
 {
     record EnrichedPerformance : Performance
@@ -334,21 +334,21 @@ This does however require a method that takes in a `Performance` and returns a `
 So, add within `BillGenerator` a new private method named `EnrichPerformance` with the appropriate input and output types.
 
 Now your `Statement` method should look like this:
-```
+```c#
         public string Statement(Invoice invoice)
         {
-            var statementData = new StatementData(invoice.Customer, invoice.Performances.ConvertAll(EnrichPerformance));
+            var statementData = new StatementData{ Customer = invoice.Customer, Performances = invoice.Performances.ConvertAll(EnrichPerformance) };
             
             return RenderPlainText(invoice, statementData);
         }
 ```
 
 Having prepared the groundwork for the second intermediate data structure, move the `Play` property into `EnrichedPerformance` 
-and use the new .Net 5 'init' keyword to specify that this property is only settable using the constructor.
-Add the `Play` type to the constructor using the quick actions context menu and the "Add parameters to constructor" option.
+and ensure immutability by only specifying a `get`. (This forces a `private set` and the need to set this property via a parameterized constructor).
+Add the `Play` parameter to the constructor by placing the caret on 'Play' property, bring up the quick actions context menu and select the "Add parameters to constructor" option.
 
 Resolve the compiler error by adding a call to the `PlaysFor` method as argument for the second parameter in the `new` call in `EnrichPerformance`:
-```
+```c#
         private EnrichedPerformance EnrichPerformance(Performance performance)
         {
             return new EnrichedPerformance(performance, PlaysFor(performance));
@@ -358,7 +358,7 @@ Replacing the call to `PlaysFor(perf)` within `RenderPlainText` with `perf.Play`
 Compile-test-commit
 
 The next thing to move is the `Amount` property. 
-We start by adding `Amount` as a init only property to `EnrichedPerformance`. 
+We start by adding `Amount` as a get only property to `EnrichedPerformance`. 
 Add the new property to `EnrichedPerformance` constructor using Visual Studio quick actions context menu.
 Initialize the new argument using a call to `AmountFor(performance)` within `EnrichPerformance`.
 Then, in **_all_** methods that use the intermediate data structure `StatementData`, we replace the usage of `AmountFor(perf)` with `perf.Amount`.
@@ -383,7 +383,7 @@ All tests should now be green again, and `Statement` should look like this:
 ```c#
         public string Statement(Invoice invoice)
         {
-            var statementData = new StatementData(invoice.Customer, invoice.Performances.ConvertAll(EnrichPerformance));
+            var statementData = new StatementData{ Customer = invoice.Customer, Performances = invoice.Performances.ConvertAll(EnrichPerformance) };
             statementData.TotalVolumeCredits = GetTotalVolumeCredits(statementData);
             statementData.TotalAmount = GetTotalAmount(statementData);
             
@@ -403,7 +403,7 @@ Compile-test-commit
 Before we wrap it up, apply the **Replace loop with pipeline** refactoring on each of the total calculation functions.
 Compile-test-commit.
 
-```
+```c#
         private decimal GetTotalAmount()
         {
             decimal totalAmount = this.Performances.Sum(perf => perf.Amount);
@@ -423,12 +423,12 @@ Compile-test-commit.
 Remember that we started all these refactorings as part of the **Split phase** refactoring. 
 Now that all data calculations have be encapsulated in `StatementData`, we can apply the last step of this refactoring.
 This is the extraction of the first step.
-Apply the **Extract Method** refactoring on `var statementData = new StatementData(invoice.Customer, invoice.Performances.ConvertAll(EnrichPerformance));`
+Apply the **Extract Method** refactoring on `var statementData = new StatementData{ Customer = invoice.Customer, Performances = invoice.Performances.ConvertAll(EnrichPerformance) };`
 and we are going to call the new method `CreateStatementData`.
 Compile-test-commit.
 
 Apply the **Inline variable** on the `statementData` variable.
-```
+```c#
         public string Statement(Invoice invoice)
         {
             return RenderPlainText(CreateStatementData(invoice));
@@ -436,7 +436,7 @@ Apply the **Inline variable** on the `statementData` variable.
 ```
 
 And with that we are ready to add the HTML version:
-```
+```c#
 
         public string HtmlStatement(Invoice invoice)
         {

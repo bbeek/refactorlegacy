@@ -42,7 +42,7 @@ namespace TheatricalPlays
 
         private StatementData CreateStatementData(Invoice invoice)
         {
-            return new StatementData(invoice.Customer, invoice.Performances.ConvertAll(EnrichPerformance));
+            return new StatementData { Customer = invoice.Customer, Performances = invoice.Performances.ConvertAll(EnrichPerformance) };
         }
 
         private EnrichedPerformance EnrichPerformance(Performance performance)
