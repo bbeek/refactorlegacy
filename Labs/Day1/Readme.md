@@ -40,7 +40,7 @@ As a first step, let's begin by extracting functionality from the current long `
 The `switch` statement related to calculating the charge of a performance is a good start as it is performs 1 thing that we can return in a method.
 
 So we are going to perform a **Extract Method** on this statement.
-Select line 22 till 40 in `BillGenerator.cs` and apply the **Extract method** refactoring from Visual Studio (either via Edit > Refactor > Extract Method or using the Ctrl+. "quick actions" > Extract )
+Select line 22 till 45 in `BillGenerator.cs` and apply the **Extract method** refactoring from Visual Studio (either via Edit > Refactor > Extract Method or using the Ctrl+. "quick actions" > Extract )
 And name the newly extracted function `AmountFor`. (We can always rename it later to a more suitable name).
 We finish the first refactoring by running our unittests to verify that we did not break anything and committing the first change
 

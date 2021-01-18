@@ -25,13 +25,18 @@ namespace TheatricalPlays
                 {
                     case PlayType.Tragedy:
                         thisAmount = 40000;
-                        if (perf.Audience > 30) thisAmount += 1000 * (perf.Audience - 30);
-
+                        if (perf.Audience > 30)
+                        {
+                            thisAmount += 1000 * (perf.Audience - 30);
+                        }
                         break;
 
                     case PlayType.Comedy:
                         thisAmount = 30000;
-                        if (perf.Audience > 20) thisAmount += 10000 + 500 * (perf.Audience - 20);
+                        if (perf.Audience > 20)
+                        {
+                            thisAmount += 10000 + 500 * (perf.Audience - 20);
+                        }
                         thisAmount += 300 * perf.Audience;
                         break;
 
@@ -51,7 +56,8 @@ namespace TheatricalPlays
             }
 
             var discountPercentage = Math.Min(30, (volumeCredits / 10));
-            totalAmount = totalAmount - (totalAmount * (discountPercentage/100m));
+            totalAmount -= (totalAmount * (discountPercentage/100m));
+
             result.AppendLine($"Amount owed is {(totalAmount / 100).ToString("C", format)}");
             result.Append($"You earned {volumeCredits} credits");
             return result.ToString();
