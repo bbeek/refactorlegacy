@@ -56,14 +56,19 @@ namespace TheatricalPlays
             {
                 case PlayType.Tragedy:
                     result = 40000;
-                    if (performance.Audience > 30) result += 1000 * (performance.Audience - 30);
-
+                    if (performance.Audience > 30) 
+					{
+						result += 1000 * (performance.Audience - 30);
+					}
                     break;
 
                 case PlayType.Comedy:
                     result = 30000;
-                    if (performance.Audience > 20) result += 10000 + 500 * (performance.Audience - 20);
-                    result += 300 * performance.Audience;
+                    if (performance.Audience > 20) 
+					{
+						result += 10000 + 500 * (performance.Audience - 20);
+                    }
+					result += 300 * performance.Audience;
                     break;
 
                 default:
