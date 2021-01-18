@@ -76,15 +76,15 @@ Test the changes to ensure that the external behavior was not modified and commi
 
 Next encapsulate the lookup of a play based on it's performance in a separate function.
 Select this whole line `var play = plays[perf.PlayId];` (around line 28 within `Statement` function), 
-apply the **Extract Method** refactoring and name the newly created method `PlaysFor`.
+apply the **Extract Method** refactoring and name the newly created method `PlayFor`.
 Compile-test-commit.
 
 Apply the **Inline variable** refactoring on the `play` variable.
 Place the cursor on the `play`, bring up the "quick actions" context menu and select the option "Inline temporary variable".
 As always after a refactor action, compile-test-commit.
 
-With this new `PlaysFor` function, we can begin removing the `play` parameter from the `AmountFor` function.
-First, use the new function in `amountFor` by replacing the 2 usages of the `play` variable with a call to `PlaysFor(performance)`.
+With this new `PlayFor` function, we can begin removing the `play` parameter from the `AmountFor` function.
+First, use the new function in `amountFor` by replacing the 2 usages of the `play` variable with a call to `PlayFor(performance)`.
 And as `AmountFor` now uses non-static methods, remove the static keyword.
 Compile-test-commit
 
@@ -96,6 +96,7 @@ As a final refactoring during this step, apply the **Inline variable** refactori
 Your `BillGenerator` class should look something like the one in folder `src\01 First Steps`
 
 # Extracting Volume Credits
+============================
 Next we want to extract the `volumeCredits` calculation from the foreach loop.
 Unfortunately due to `volumeCredits` accumulator, we cannot rely on the automated "Extract method" functionality.
 Instead we are going to perform the **Extract Method** refactoring manually. 
@@ -113,7 +114,7 @@ private int VolumeCreditsFor(Performance perf)
     // add volume credits
     volumeCredits += Math.Max(perf.Audience - 30, 0);
     // add extra credit for every ten comedy attendees
-    if (PlayType.Comedy == PlaysFor(perf).Type) volumeCredits += (int)Math.Floor((decimal)perf.Audience / 5);
+    if (PlayType.Comedy == PlayFor(perf).Type) volumeCredits += (int)Math.Floor((decimal)perf.Audience / 5);
 }
 ```
 Add the missing variable to resolve the compiler errors and return it:
@@ -124,7 +125,7 @@ private int VolumeCreditsFor(Performance perf)
     // add volume credits
     volumeCredits += Math.Max(perf.Audience - 30, 0);
     // add extra credit for every ten comedy attendees
-    if (PlayType.Comedy == PlaysFor(perf).Type) volumeCredits += (int)Math.Floor((decimal)perf.Audience / 5);
+    if (PlayType.Comedy == PlayFor(perf).Type) volumeCredits += (int)Math.Floor((decimal)perf.Audience / 5);
 
     return volumeCredits;
 }
@@ -147,7 +148,7 @@ As it is nested in the foreach loop, we are going to apply the **Split Loop** re
             foreach (var perf in invoice.Performances)
             {
                 // print line for this order
-                result.Append($"  {this.PlaysFor(perf).Name}: {(AmountFor(perf) / 100).ToString("C", format)}");
+                result.Append($"  {this.PlayFor(perf).Name}: {(AmountFor(perf) / 100).ToString("C", format)}");
                 result.AppendLine($" ({perf.Audience} seats)");
                 totalAmount += AmountFor(perf);
             }
@@ -175,6 +176,7 @@ After compiling, testing and committing; apply **Inline variable** on `volumeCre
 Your `BillGenerator` class should look something like the one in folder `src\02 Extract Volume Credits`
 
 # More extractions
+==================
 In order to remove the variable `totalAmount` we can use the same steps as before.
 First **Split loop* on the first foreach loop.
 After this refactoring it should look like below:
@@ -182,7 +184,7 @@ After this refactoring it should look like below:
             foreach (var perf in invoice.Performances)
             {
                 // print line for this order
-                result.Append($"  {this.PlaysFor(perf).Name}: {(AmountFor(perf) / 100).ToString("C", format)}");
+                result.Append($"  {this.PlayFor(perf).Name}: {(AmountFor(perf) / 100).ToString("C", format)}");
                 result.AppendLine($" ({perf.Audience} seats)");
             }
 
@@ -229,6 +231,7 @@ As a final refactoring in this part, **Inline variable** on `format` in `Usd`
 Your `BillGenerator` class should look something like the one in folder `src\03 More extractions`
 
 # Split phase and adding render HTML
+====================================
 So far, we worked on bringing structure onto the original function so that we can easily understand the various parts.
 In order to add the HTML support, we could stop now, just copy the seven or so lines remaining in `Statement`, create an HTML variant and call it a day.
 This does mean however that the logic for what is required to generate a bill is still duplicated.
@@ -347,14 +350,14 @@ Having prepared the groundwork for the second intermediate data structure, move 
 and ensure immutability by only specifying a `get`. (This forces a `private set` and the need to set this property via a parameterized constructor).
 Add the `Play` parameter to the constructor by placing the caret on 'Play' property, bring up the quick actions context menu and select the "Add parameters to constructor" option.
 
-Resolve the compiler error by adding a call to the `PlaysFor` method as argument for the second parameter in the `new` call in `EnrichPerformance`:
+Resolve the compiler error by adding a call to the `PlayFor` method as argument for the second parameter in the `new` call in `EnrichPerformance`:
 ```c#
         private EnrichedPerformance EnrichPerformance(Performance performance)
         {
-            return new EnrichedPerformance(performance, PlaysFor(performance));
+            return new EnrichedPerformance(performance, PlayFor(performance));
         }
 ```
-Replacing the call to `PlaysFor(perf)` within `RenderPlainText` with `perf.Play`.
+Replacing the call to `PlayFor(perf)` within `RenderPlainText` with `perf.Play`.
 Compile-test-commit
 
 The next thing to move is the `Amount` property. 
@@ -462,6 +465,54 @@ And with that we are ready to add the HTML version:
 
 Easy.
 
-Your `BillGenerator` class should look something like the one in folder `src\04 Split Phase`
+Your `TheatricalPlays` project should look something like the one in folder `src\04 Split Phase`
 
 # Calculations by type
+======================
+Now that we've added the first request, we'll turn our attention to the second feature request: Supporting more categories of plays, each with its own cost and credits calculation.
+As it currently stands, we would have to add more switch statements and conditionals onto `AmountFor` and `VolumeCreditsFor` in order to facilitate such a request, 
+which is not the direction we want to go for.
+
+Instead, we are going to apply the refactoring **Replace Conditional with Polymorphism**.
+
+But before we can start applying this refactor action, we first need some kind of inheritance structure.
+The `EnrichPerformance` method is here our entry-point as it populates the intermediate data structure using the conditional functions for amount and credits.
+We want to host those calculating functions in a class that will become the basis of our inheritance structure.
+
+Due to the expected duties of this class, let's call it `PerformanceCalculator`.
+Add a new class `PerformanceCalculator` to the project. In this class add an **`init`** property `Performance` of type `Performance`
+Like so:
+```c#
+namespace TheatricalPlays
+{
+    class PerformanceCalculator
+    {
+        public Performance Performance { get; init; }
+    }
+}
+```
+
+And initialize a new `calculator` variable of type `PerformanceCalculator` within the `EnrichPerformance` function,
+whereby we are also going to adjust the initialization of `EnrichedPerformance` to use the `calculator.Performance` property.
+```c#
+        private EnrichedPerformance EnrichPerformance(Performance performance)
+        {
+            var calculator = new PerformanceCalculator { Performance = performance };
+
+            return new EnrichedPerformance(calculator.Performance, PlayFor(performance), AmountFor(performance), VolumeCreditsFor(performance));
+        }
+```
+Compile-test-commit
+
+Then next property to move into `PerformanceCalculator` is a `Play`, as all conditional logic resolves around what type of `Play` was involved.
+Here again, we are going to add a **`init`** property named `Play` to `PerformanceCalculator` and within `EnrichPerformance` this property will be populated using the `PlayFor(..)` call.
+As such:
+```c#
+        private EnrichedPerformance EnrichPerformance(Performance performance)
+        {
+            var calculator = new PerformanceCalculator { Performance = performance, Play = PlayFor(performance) };
+
+            return new EnrichedPerformance(calculator.Performance, calculator.Play, AmountFor(performance), VolumeCreditsFor(performance));
+        }
+```
+
