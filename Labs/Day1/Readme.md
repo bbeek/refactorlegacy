@@ -1,5 +1,5 @@
 # Refactoring "TheatricalPlays"
-Background: 
+### Background: 
 
 This project contains a bill generator for a theatrical company.
 This company charges their customers based on the size of the audience and the type of play.
@@ -9,7 +9,7 @@ Beside providing a bill, it also outputs the customers "volume credits", which i
 Every 10 credits earns a customer 1 percentage point up to a maximum discount of 30% of the total bill.
 
 The plays this company can perform are stored in a simple JSON file.
-In another JSON file are the performances stored that were performed for a customer containing the playid and the audience.
+The performances that were performed for a customer are stored another JSON file containing the playid and the audience.
 
 ## Target Environment
 * .NET Core 5.0
@@ -19,7 +19,7 @@ In another JSON file are the performances stored that were performed for a custo
 * Visual Studio 2019 v16.8+ 
 
 # Goal
-The company wants to perform more types of plays. 
+The company wants to perform more types of plays. <br />
 They hope to perform: historical, pastoral, pastoral-comical, historical-pastoral, tragical-comical-historical-pastoral and poem unlimited
 Although the pricing structure and the volume credit calculations are not fully worked out, it appears that this will be under subject of change in the near future.
 
@@ -255,7 +255,7 @@ Now the solution should be in a compilable state.
 So, we start the process of moving data required for the second phase into the intermediate data structure.
 
 We begin by moving the Customer data into the `StatementData` class. First add `public string Customer { get; init; }` to the `StatementData` class.
-> **Note** that we enforce encapsulation to the data by only allowing the name to be set with the constructor by specifying the new **_.Net 5 `init` accessibility modifier_**.
+> **Note** that we enforce encapsulation by only allowing the name to be set with the constructor by specifying the new **_.Net 5 `init` accessibility modifier_**.
 > This defaults into a `private set` without a need for a parameterized constructor and thus ensuring immutability
 
 Change the usage from `invoice.Customer` within `RenderPlainText` into `data.Customer` and add `invoice.Customer` as parameter of the `new StatementData` call.
