@@ -1,3 +1,4 @@
+using CommonObjects;
 using FluentAssertions;
 using ParameterizeConstructor;
 using Xunit;
