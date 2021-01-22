@@ -20,14 +20,14 @@ The performances that were performed for a customer are stored another JSON file
 
 # Goal
 The company wants to perform more types of plays. <br />
-They hope to perform: historical, pastoral, pastoral-comical, historical-pastoral, tragical-comical-historical-pastoral and poem unlimited
+They hope to perform: historical, pastoral, pastoral-comical, historical-pastoral, tragical-comical-historical-pastoral and poem unlimited.
 Although the pricing structure and the volume credit calculations are not fully worked out, it appears that this will be under subject of change in the near future.
 
 Furthermore, the company wants to send out HTML formatted statements to some customers.
 
-In order to do so, you would either have to copy-paste the current `BillGenerator.Statement` implementation into a HTML statement generator with all code duplicated.
-
-Or, first refactor the current implementation to a improved design more suitable for the upcoming features/requests.
+In order to do so, 
+1. you would either have to copy-paste the current `BillGenerator.Statement` implementation into a HTML statement generator with all code duplicated.
+2. Or, first refactor the current implementation to a improved design more suitable for the upcoming features/requests.
 
 In this lab we are going to perform the steps needed for the latter (of course :))
 
@@ -36,7 +36,7 @@ In this lab we are going to perform the steps needed for the latter (of course :
 As a first step, let's begin by extracting functionality from the current long `Statement` function.
 The `switch` statement related to calculating the charge of a performance is a good start as it is performs 1 thing that we can return in a method.
 
-So we are going to perform a **Extract Method** on this statement.
+We are going to begin with performing a **Extract Method** refactoring on this statement.<br />
 Select line 22 till 45 in `BillGenerator.cs` and apply the **Extract method** refactoring from Visual Studio (either via Edit > Refactor > Extract Method or using the Ctrl+. "quick actions" > Extract ).
 And name the newly extracted function `AmountFor`. (We can always rename it later to a more suitable name).
 We finish the first refactoring by running our unittests to verify that we did not break anything and committing the first change
@@ -47,12 +47,12 @@ Again compile-test-commit.
 Apply the same **Rename variable** refactoring on the `perf` parameter of `AmountFor`. Rename it to `performance`, compile test and commit.
 
 ## Removing the `play` variable
-The next refactoring we want to apply is regarding the `play` parameter. This parameter is just a computation based on the performance playID
-and as we already have a Performance object as parameter, there should not be a need to pass it in as we could also calculate it ourselves.
+The next refactoring we want to apply is regarding the `play` parameter.<br />
+This parameter is just a computation based on the performance playID and as we already have a Performance object as parameter, there should not be a need to pass it in as we could also calculate it ourselves.
 Meaning that we want to remove the `play` parameter.
 
-However here the design of the `Statement` method holds us back, because the dictionary containing all plays is a local parameter.
-Meaning that we need to promote the `plays` parameter into a instance variable (in C# called Fields) of the class `BillGenerator`
+However here the design of the `Statement` method holds us back, as the dictionary containing all plays is a local parameter.
+Meaning that we need to promote the `plays` parameter into a instance variable (in C# called *Fields*) of the class `BillGenerator`
 Let's start with adding `private readonly IReadOnlyDictionary<string, Play> plays;` to the top of the class.
 
 Now we *could* assign the `plays` parameter directly to the instance variable by using `this.plays = plays;` within the Statement method, 
@@ -69,9 +69,9 @@ Finally we are going to switch into using the instance variable by removing the 
 Place the cursor somewhere on the line `public string Statement(Invoice invoice, IReadOnlyDictionary<string, Play> plays)` and bring up the "quick actions" menu.
 Select the "Change signature..." option. In the dialog that opens, select the `plays` parameter, press the Remove button and finally press "OK" to apply the changes.
 With this refactoring, the instance variable should now be used.
-Test the changes to ensure that the external behavior was not modified and commit if all tests are green.
+Test the changes to ensure that the external behavior was not modified and commit when all tests are green.
 
-Next encapsulate the lookup of a play based on it's performance in a separate function.
+Next, encapsulate the lookup of a play based on it's performance in a separate function.
 Select this whole line `var play = plays[perf.PlayId];` (around line 28 within `Statement` function), 
 apply the **Extract Method** refactoring and name the newly created method `PlayFor`.
 Compile-test-commit.
@@ -94,7 +94,7 @@ Your `BillGenerator` class should look something like the one in folder `src\01 
 
 # Extracting Volume Credits
 Next we want to extract the `volumeCredits` calculation from the foreach loop.
-Unfortunately due to `volumeCredits` accumulator, we cannot rely on the automated "Extract method" functionality.
+Unfortunately due to `volumeCredits` accumulator, we cannot rely on the automated **"Extract Method"** functionality.
 Instead we are going to perform the **Extract Method** refactoring manually. 
 First create a new method named `VolumeCreditsFor`:
 ```c#
@@ -134,12 +134,12 @@ Replace to copied code with a call to `VolumeCreditsFor`:
                 volumeCredits += VolumeCreditsFor(perf);
 ```
 
-Compile-test-commit the manual Extract Method refactoring.
+Compile-test-commit to finish of this manual **Extract Method** refactoring.
 Lastly, remove the unnecessary (and even misleading) comments and **Rename variable** in the new function, 
-renaming `volumeCredits` to result and `perf` to `performance` with a compile-test-commit action for each rename.
+renaming `volumeCredits` to `result` and `perf` to `performance` with a compile-test-commit action for each rename.
 
 Next we are going to remove the `volumeCredits` from `Statement`.
-As it is nested in the foreach loop, we are going to apply the **Split Loop** refactoring (see slides)
+As it is nested in the foreach loop, we are going to apply the **Split Loop** refactoring (see slides for the steps involved)
 ```c#
             foreach (var perf in invoice.Performances)
             {
@@ -156,7 +156,7 @@ As it is nested in the foreach loop, we are going to apply the **Split Loop** re
 ```
 Compile-test-commit
 
-Then using **Slide Statements** (see hidden slide 20) move the declaration of the `volumeCredits` variable before the loop:
+Then using **Slide Statements** (see hidden slide 20), move the declaration of the `volumeCredits` variable before the loop:
 ```c#
             var volumeCredits = 0;
             foreach (var perf in invoice.Performances)
@@ -197,7 +197,7 @@ Compile-test-commit
 **Inline variable** `totalAmount` (compile-test-commit) in `Statement`  function.
 In `GetTotalAmount` method **Rename variable** `totalAmount` to `result`
 
-Lastly let's extract the currency formatting.
+Lastly let's extract the currency formatting.<br />
 As both the `AmountFor(perf)` and `GetTotalAmount(invoice)` use the same kind of code, let's **Extract method** on this functionality.
 Here we need to again perform a manual refactoring as the automated tooling does not suffice.
 Given that this method will format an amount into USD, we could name it as `FormatAsUSD` but `Usd` is just as suggestive so we go with latter.
@@ -227,12 +227,12 @@ Your `BillGenerator` class should look something like the one in folder `src\03 
 
 # Split phase and adding render HTML
 So far, we worked on bringing structure onto the original function so that we can easily understand the various parts.
-In order to add the HTML support, we could stop now, just copy the seven or so lines remaining in `Statement`, create an HTML variant and call it a day.
+In order to add the HTML support, we could stop now, just copy the seven or so lines remaining in `Statement`, create an HTML variant and call it a day.<br/>
 This does mean however that the logic for what is required to generate a bill is still duplicated.
 
-Therefor we are now going to apply the **Split Phase** refactoring to untangle the logic for calculating the statement data from the logic for rendering text (or later HTML)
-As a reminder, with the **Split Phase** refactoring, we begin by extracting the second phase. 
-Then create an intermediate data structure, for encapsulation the data calculated in the first phase, followed by gradually copying over all properties onto this structure.
+Therefor we are now going to apply the **Split Phase** refactoring to untangle the logic for calculating the statement data from the logic for rendering text (or later HTML).<br />
+As a reminder, with the **Split Phase** refactoring, we begin by extracting the second phase. <br/>
+Then create an intermediate data structure, for encapsulation the data calculated in the first phase, followed by gradually copying over all properties onto this structure.<br/>
 And lastly, extracting the first phase.
 
 Given that the second phase of the `Statement` function is that of rendering the plaintext bill, we begin by applying the **Extract method** on all the lines in `Statement`.
@@ -248,11 +248,11 @@ Now `Statement` function should look like this:
 Compile-test-commit.
 
 ## Creating intermediate data structure `StatementData`
-Then create a intermediate data structure. Right-click on the `TheatricalPlays` project within the Solution Explorer and add a new class named `StatementData`.
-Next, using the **Change function declaration** (use the change signature functionality in Visual Studio) add a new parameter to the `RenderPlainText` method of type `StatementData` with name `data`.
-Create a new variable `statementData` in `Statement` and pass it into the `RenderPlainText` method.
-Now the solution should be in a compilable state.
-So, we start the process of moving data required for the second phase into the intermediate data structure.
+Then create a intermediate data structure. Right-click on the `TheatricalPlays` project within the Solution Explorer and add a new class named `StatementData`.<br />
+Next, using the **Change function declaration** (use the change signature functionality in Visual Studio) add a new parameter to the `RenderPlainText` method of type `StatementData` with name `data`.<br />
+Create a new variable `statementData` in `Statement` and pass it into the `RenderPlainText` method.<br/>
+Now the solution should be in a compilable state.<br/>
+So, we start the process of moving data required for the second phase into the intermediate data structure.<br/>
 
 We begin by moving the Customer data into the `StatementData` class. First add `public string Customer { get; init; }` to the `StatementData` class.
 > **Note** that we enforce encapsulation by only allowing the name to be set with the constructor by specifying the new **_.Net 5 `init` accessibility modifier_**.
@@ -279,9 +279,10 @@ And the first few lines of `RenderPlainText` should now look like this:
             foreach (var perf in invoice.Performances)
 ```
 
-We repeat the same process for the `Performances` property. 
-Because we want to be sure that this list does not change while we query it, we are going to make the new property of type `ImmutableList`.
-Like so: `public ImmutableList<Performance> Performances { get; init;}`. 
+We repeat the same process for the `Performances` property. <br/>
+Since we want to be sure that this list does not change while we query it, we are going to make the new property of type `ImmutableList`.
+> `ReadOnlyList` still allows for changes on the underlying collection to be reflected and is thus still mutable.<br/>
+`public ImmutableList<Performance> Performances { get; init; }`. 
 Ensure that the updated constructor is called with the correct parameters within `Statement` and that the foreach loop in `RenderPlainText` now uses `data.Performances`.
 Compile-test-commit.
 
@@ -369,13 +370,14 @@ Repeat the steps above only now for `VolumeCreditsFor` and compile-test-commit.
 We move on the replacing the calculation of the two totals.
 
 First let's create a new property `public decimal TotalAmount { get; set; }` within `StatementData`.
-As this property is settable from the outside, assign the TotalAmount property with `statementData.TotalAmount = GetTotalAmount(statementData);`.
-Replace `GetTotalAmount(data)` in `RenderPlainText` with `data.TotalAmount`.
+As this property is settable from the outside, assign the TotalAmount property with `statementData.TotalAmount = GetTotalAmount(statementData);`.<br />
+Replace `GetTotalAmount(data)` in `RenderPlainText` with `data.TotalAmount`.<br/>
 Compile-test-commit.
-Repeat this process for the property `TotalVolumeCredits`. When replacing the usage of `GetTotalVolumeCredits(data)` with `data.TotalVolumeCredits`, also update the `GetTotalAmount` method.
-Verify that all unittests are green, if not, then we broke the TotalAmount calculation as the volume credits calculation was not yet performed.
-This shows us why it remains important to test after each step.
-Resolve the introduced bug by, for now, switching the order of the `TotalAmount` and `TotalVolumeCredits`.
+
+Repeat this process for the property `TotalVolumeCredits`. <br/>When replacing the usage of `GetTotalVolumeCredits(data)` with `data.TotalVolumeCredits`, also update the `GetTotalAmount` method.
+Verify that all unittests are green, if not, then we broke the TotalAmount calculation as the volume credits calculation was not yet performed.<br/>
+This shows us why it remains important to test after each step.<br/>
+Resolve the introduced bug by, for now, switching the order of the `TotalAmount` and `TotalVolumeCredits`.<br/>
 
 All tests should now be green again, and `Statement` should look like this:
 ```c#
@@ -392,13 +394,14 @@ All tests should now be green again, and `Statement` should look like this:
 As the current state is very fragile, we are going to move the total calculation into the `StatementData` class.
 Copy the `GetTotalAmount` function to `StatementData`. Adjust it to the new context by removing the `data` parameter and using `this` instead of `data`.
 Change the `TotalAmount` property into a pass through call to `GetTotalAmount`: `public decimal TotalAmount => GetTotalAmount();`
-With that change, we can remove the assignment of `TotalAmount` in `Statement`.
-Compile-test-commit. Remove the dead code of `GetTotalAmount` in `BillGenerator`. Always a satisfying feeling!
+With that change, we can remove the assignment of `TotalAmount` in `Statement`.<br/>
+Compile-test-commit.<br/>
+Remove the dead code of `GetTotalAmount` in `BillGenerator`. Always a satisfying feeling!
 
-Repeat the above steps for `GetTotalVolumeCredits`.
+Repeat the above steps for `GetTotalVolumeCredits`.<br/>
 Compile-test-commit
 
-Before we wrap it up, apply the **Replace loop with pipeline** refactoring on each of the total calculation functions.
+Before we wrap it up, apply the **Replace loop with pipeline** refactoring on each of the total calculation functions.<br/>
 Compile-test-commit.
 
 ```c#
@@ -422,7 +425,7 @@ Remember that we started all these refactorings as part of the **Split phase** r
 Now that all data calculations have be encapsulated in `StatementData`, we can apply the last step of this refactoring.
 This is the extraction of the first step.
 Apply the **Extract Method** refactoring on `var statementData = new StatementData{ Customer = invoice.Customer, Performances = invoice.Performances.ConvertAll(EnrichPerformance) };`
-and we are going to call the new method `CreateStatementData`.
+and we are going to call the new method `CreateStatementData`.<br/>
 Compile-test-commit.
 
 Apply the **Inline variable** on the `statementData` variable.
@@ -528,10 +531,10 @@ Update the `AmountFor` method so that it uses the moved function, as per below:
         }
 ```
 Test that the refactoring was successful. (Compile-test-commit)
-As the `AmountFor` method is only used once, apply the **Inline function** refactoring on this method.
+As the `AmountFor` method is only used once, apply the **Inline function** refactoring on this method.<br/>
 Compile-test-commit.
 
-Repeat the same process for volume credits, naming the copied function `GetVolumeCredits`.
+Repeat the same process for volume credits, naming the copied function `GetVolumeCredits`.<br/>
 Compile-test-commit.
 
 ## Making polymorphic
@@ -542,11 +545,12 @@ Add new classes `ComedyCalculator` and `TragedyCalculator`, both of which inheri
 
 With this we've setup the required inheritance structure and we can move on to the first step of the **Replace Conditional with Polymorphism**:
 1. Create a factory function. 
-> Here we can use Factory Method Design Pattern
-Begin by extracting the current creation of a `PerformanceCalculator` into a new method using **Extract Method**.
-Name this function `CreatePerformanceCalculator`.
+    > Here we can use Factory Method Design Pattern.
 
-Then extend this function with the creation of the sub-types, based on the play type.
+    Begin by extracting the current creation of a `PerformanceCalculator` into a new method using **Extract Method**.
+    Name this function `CreatePerformanceCalculator`.
+
+    Then extend this function with the creation of the sub-types, based on the play type.
 ```c#
         private PerformanceCalculator CreatePerformanceCalculator(Performance performance, Play play)
         {
@@ -562,27 +566,28 @@ Then extend this function with the creation of the sub-types, based on the play 
 2. Move conditional code to superclass. As we already performed this step with setting up `PerformanceCalculator`, we skip this step.
 
 3. Take a subclass, create override method for the conditional logic and move the conditional logic into the subclass. Adjust to fit the new context.
-We will begin with the `TragedyCalculator`. Create the override method by using the Visual Studio feature "generate overrides".
-Set the caret on "TragedyCalculator" in the cs file. Bring up the quick actions menu and select the option "Generate overrides...".
-In the dialog, only select the method `GetAmount` and press OK.
-Move the logic from the superclass to the `TragedyCalculator.GetAmount` and just to be extra paranoid throw a `NotImplementedException` in the "Tragedy" leg of `PerformanceCalculator.GetAmount`
-Compile-test-commit.
+    We will begin with the `TragedyCalculator`. Create the override method by using the Visual Studio feature "generate overrides".
+    Set the caret on "TragedyCalculator" in the cs file. Bring up the quick actions menu and select the option "Generate overrides...".
+    In the dialog, only select the method `GetAmount` and press OK.
+    Move the logic from the superclass to the `TragedyCalculator.GetAmount` and just to be extra paranoid throw a `NotImplementedException` in the "Tragedy" leg of `PerformanceCalculator.GetAmount`<br/>
+    Compile-test-commit.
 
 4. Repeat for each conditional.
-Apply the same process on the `GetAmount` method for the `ComedyCalculator`.
-Compile-test-commit.
+    Apply the same process on the `GetAmount` method for the `ComedyCalculator`.<br/>
+    Compile-test-commit.<br/>
+
 And with that, we reach the last step of the refactoring:
 
 5. Change the method in the superclass.
-As there is no default calculation for the amount, we want to signal our future self (or colleagues) that this is the responsibility of a subclass
+    As there is no default calculation for the amount, we want to signal our future self (or colleagues) that this is the responsibility of a subclass
 by throwing a `NotImplementedException`.
 ```c#
         public virtual int GetAmount() => throw new NotImplementedException("subclass responsibility");
 ```
-Compile-test-commit.
+    Compile-test-commit.
 
 However as we are not yet ready with moving all conditionals, repeat step 4 and 5 for `GetVolumeCredits` for `ComedyCalculator`.
-Do note that there is a default implementation on the superclass.
+Do note that there is a default implementation on the superclass.<br/>
 Compile-test-commit.
 
 Your `TheatricalPlays` project should look something like the one in folder `src\05 Calculations per type`
