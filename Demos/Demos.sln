@@ -23,13 +23,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitLoop", "SplitLoop\Spli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitLoopTests", "Tests\SplitLoopTests\SplitLoopTests.csproj", "{FF8804D7-370C-4914-963A-723B123E5CF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractAndRename", "ExtractAndRename\ExtractAndRename.csproj", "{3EC6839C-51C3-49CE-8BA1-F363FEBDD9AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractAndRename", "ExtractAndRename\ExtractAndRename.csproj", "{3EC6839C-51C3-49CE-8BA1-F363FEBDD9AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractAndRenameTests", "Tests\ExtractAndRenameTests\ExtractAndRenameTests.csproj", "{2E3DE8D7-EA7C-4792-AD99-9ABE86D0F190}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractAndRenameTests", "Tests\ExtractAndRenameTests\ExtractAndRenameTests.csproj", "{2E3DE8D7-EA7C-4792-AD99-9ABE86D0F190}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveAndSlide", "MoveAndSlide\MoveAndSlide.csproj", "{758A6545-F0DA-406D-AF6E-80BE43BCA8FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoveAndSlide", "MoveAndSlide\MoveAndSlide.csproj", "{758A6545-F0DA-406D-AF6E-80BE43BCA8FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveAndSlideTests", "Tests\MoveAndSlideTests\MoveAndSlideTests.csproj", "{BEDE1E15-7D95-4838-A3C4-3A0E4C6439B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoveAndSlideTests", "Tests\MoveAndSlideTests\MoveAndSlideTests.csproj", "{BEDE1E15-7D95-4838-A3C4-3A0E4C6439B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Day 2", "Day 2", "{DC9D3FFF-B935-4453-8A14-954D6C033BA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{76414E9C-162C-4094-ABB8-E47C9E78397C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterizeConstructor", "ParameterizeConstructor\ParameterizeConstructor.csproj", "{A7920B74-7BE4-4743-A1BB-79FF79F36FC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterizeConstructorTests", "Tests\ParameterizeConstructorTests\ParameterizeConstructorTests.csproj", "{E7EBC12B-BECA-4E03-BAD7-1BCF75E8DF47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +93,14 @@ Global
 		{BEDE1E15-7D95-4838-A3C4-3A0E4C6439B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEDE1E15-7D95-4838-A3C4-3A0E4C6439B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEDE1E15-7D95-4838-A3C4-3A0E4C6439B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7920B74-7BE4-4743-A1BB-79FF79F36FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7920B74-7BE4-4743-A1BB-79FF79F36FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7920B74-7BE4-4743-A1BB-79FF79F36FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7920B74-7BE4-4743-A1BB-79FF79F36FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7EBC12B-BECA-4E03-BAD7-1BCF75E8DF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7EBC12B-BECA-4E03-BAD7-1BCF75E8DF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7EBC12B-BECA-4E03-BAD7-1BCF75E8DF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7EBC12B-BECA-4E03-BAD7-1BCF75E8DF47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +119,9 @@ Global
 		{2E3DE8D7-EA7C-4792-AD99-9ABE86D0F190} = {390C0213-05BE-4FEE-8CE6-29B1A2D26B06}
 		{758A6545-F0DA-406D-AF6E-80BE43BCA8FD} = {C4158DBC-C486-4D3D-AAA4-D34964FAB930}
 		{BEDE1E15-7D95-4838-A3C4-3A0E4C6439B7} = {390C0213-05BE-4FEE-8CE6-29B1A2D26B06}
+		{76414E9C-162C-4094-ABB8-E47C9E78397C} = {DC9D3FFF-B935-4453-8A14-954D6C033BA1}
+		{A7920B74-7BE4-4743-A1BB-79FF79F36FC5} = {DC9D3FFF-B935-4453-8A14-954D6C033BA1}
+		{E7EBC12B-BECA-4E03-BAD7-1BCF75E8DF47} = {76414E9C-162C-4094-ABB8-E47C9E78397C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14716A14-D4D3-4F86-ACCA-80777A692904}
