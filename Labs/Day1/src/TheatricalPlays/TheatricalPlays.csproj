@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\..\invoices.json" Link="invoices.json">
+    <None Remove="invoices.json" />
+    <None Remove="plays.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="invoices.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\plays.json" Link="plays.json">
+    <Content Include="plays.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

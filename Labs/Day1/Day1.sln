@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FDCE07F5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D368D95-43A9-45C3-8B9D-C268A3B5813D}"
 	ProjectSection(SolutionItems) = preProject
-		invoices.json = invoices.json
-		plays.json = plays.json
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
