@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CommonObjects
+﻿namespace CommonObjects
 {
     public class Money
     {
@@ -14,19 +12,29 @@ namespace CommonObjects
 
         public Money(decimal value) => this.value = value;
 
-        public virtual Money ReduceBy(int p)
+        public Money ReduceBy(int p)
         {
             return new Money(value * (100m - p) / 100m);
         }
 
-        public virtual bool MoreThan(Money other)
+        public Money Add(Money other)
+        {
+            return new Money(value + other.value);
+        }
+
+        public bool MoreThan(Money other)
         {
             return this.value.CompareTo(other.value) > 0;
         }
 
-        public virtual Money Percentage(int p)
+        public Money Percentage(int p)
         {
             return new Money(value * p / 100);
+        }
+
+        public decimal AsDecimal()
+        {
+            return value;
         }
 
         public override bool Equals(object other)
@@ -50,7 +58,7 @@ namespace CommonObjects
 
         public override string ToString()
         {
-            return value.ToString("C");
+            return string.Format("{0:0.00}", value);
         }
     }
 }
