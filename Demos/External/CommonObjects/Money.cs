@@ -1,4 +1,6 @@
-﻿namespace ParameterizeConstructor
+﻿using System;
+
+namespace CommonObjects
 {
     public class Money
     {
@@ -20,6 +22,11 @@
         public virtual bool MoreThan(Money other)
         {
             return this.value.CompareTo(other.value) > 0;
+        }
+
+        public virtual Money Percentage(int p)
+        {
+            return new Money(value * p / 100);
         }
 
         public override bool Equals(object other)

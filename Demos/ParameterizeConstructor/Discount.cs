@@ -1,4 +1,6 @@
-﻿namespace ParameterizeConstructor
+﻿using CommonObjects;
+
+namespace ParameterizeConstructor
 {
     public class Discount
     {
