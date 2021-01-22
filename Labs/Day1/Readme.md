@@ -530,7 +530,7 @@ Update the `AmountFor` method so that it uses the moved function, as per below:
             return new PerformanceCalculator() { Performance = performance, Play = PlayFor(performance) }.GetAmount();
         }
 ```
-Test that the refactoring was successful. (Compile-test-commit)
+Test that the refactoring was successful. (Compile-test-commit) <br/>
 As the `AmountFor` method is only used once, apply the **Inline function** refactoring on this method.<br/>
 Compile-test-commit.
 
@@ -565,14 +565,17 @@ With this we've setup the required inheritance structure and we can move on to t
 
 2. Move conditional code to superclass. As we already performed this step with setting up `PerformanceCalculator`, we skip this step.
 
-3. Take a subclass, create override method for the conditional logic and move the conditional logic into the subclass. Adjust to fit the new context.
-    We will begin with the `TragedyCalculator`. Create the override method by using the Visual Studio feature "generate overrides".
-    Set the caret on "TragedyCalculator" in the cs file. Bring up the quick actions menu and select the option "Generate overrides...".
-    In the dialog, only select the method `GetAmount` and press OK.
+3. Take a subclass, create override method for the conditional logic and move the conditional logic into the subclass. <br/>Adjust to fit the new context.<br/>
+    We will begin with the `TragedyCalculator`. <br/>
+    Create the override method by using the Visual Studio feature "generate overrides".
+
+    Set the caret on "TragedyCalculator" in the cs file. <br />
+    Bring up the quick actions menu and select the option "Generate overrides...". <br/>
+    In the dialog, only select the method `GetAmount` and press OK. <br/>
     Move the logic from the superclass to the `TragedyCalculator.GetAmount` and just to be extra paranoid throw a `NotImplementedException` in the "Tragedy" leg of `PerformanceCalculator.GetAmount`<br/>
     Compile-test-commit.
 
-4. Repeat for each conditional.
+4. Repeat for each conditional.<br/>
     Apply the same process on the `GetAmount` method for the `ComedyCalculator`.<br/>
     Compile-test-commit.<br/>
 
@@ -586,7 +589,7 @@ by throwing a `NotImplementedException`.
 ```
     Compile-test-commit.
 
-However as we are not yet ready with moving all conditionals, repeat step 4 and 5 for `GetVolumeCredits` for `ComedyCalculator`.
+However as we are not yet ready with moving all conditionals, repeat step 4 and 5 for `GetVolumeCredits` for `ComedyCalculator`.<br/>
 Do note that there is a default implementation on the superclass.<br/>
 Compile-test-commit.
 
@@ -594,7 +597,9 @@ Your `TheatricalPlays` project should look something like the one in folder `src
 
 # Done!
 As you've just experienced yourself, with an systematic approach, we are able to safely improve the design and readability of existing code without breaking external behavior.
+
 If we take a second look at `EnrichedPerformance` then we will notice that all the data in this intermediate data-structure is also encapsulated in `PerformanceCalculator` and its subclasses.
+
 As a last exercise, see if you can change the `GetAmount` and `GetVolumeCredits` method into properties (hint: use the quick actions) and afterwards if you can safely remove the `EnrichedPerformance` class.
 
 For an idea how the project could like after the removal and some re-structuring and inlining, see `src\06 Optional`
