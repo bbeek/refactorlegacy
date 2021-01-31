@@ -21,7 +21,7 @@ so that the new feature requires minimum effort to implement.
 	See if you can extract the code for creating the `connection`.
 	As the current state does not bring up the **Extract method** option in the quick actions menu, 
 	start with *extracting* the `SqlConnection` creation by changing `connection` into a local variable by adding `var` keyword.
-	```
+	```c#
 	public PricesController()
     {
         var connection = new SqlConnection(@"Database=lift_pass;Data Source=localhost;Trusted_Connection=true");
@@ -30,7 +30,7 @@ so that the new feature requires minimum effort to implement.
 	```
 
 	And after the `Open` statement, assign the local variable `connection` to the instance variable `connection`.
-	```
+	```c#
 	public PricesController()
         {
             var connection = new SqlConnection(@"Database=lift_pass;Data Source=localhost;Trusted_Connection=true");
@@ -56,7 +56,7 @@ so that the new feature requires minimum effort to implement.
 	You'll see that the `result` variable is used throughout the rest of the method.<br/>
 	Meaning that we will need to split the variable declaration from the variable assignment.<br/>
 	Change into
-	```
+	```c#
 		double result;
 		result = (int)(await costCmd.ExecuteScalarAsync());
 	}
@@ -168,7 +168,7 @@ Then:
 
 * Change the assertion to the expected value.
 	Again, as we do not want to mix refactoring with adding features/bugfixing, document the actual incorrect for now in the assertion:
-	```
+	```c#
 	((OkObjectResult)price).Value.Should().Be("{ \"Cost\": 34}");
 	```
 	Plus update the name of the test to its current form, `GetAsync_price_for_adult_dayticket_after_endofday_time_for_tomorrow_should_return_discounted_price`
