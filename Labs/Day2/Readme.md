@@ -15,7 +15,7 @@ so that the new feature requires minimum effort to implement.
 ### 1. Breaking dependencies
 
 #### Extract and encapsulate SQL queries
-- Remove unwanted side-effects from the constructor, extract `connection`.
+- Remove unwanted side-effects from the constructor, extract `connection`.<br/>
 
 	The `connection` instance variable needs to be broken in order to get the code into a test harness.
 
@@ -45,14 +45,14 @@ so that the new feature requires minimum effort to implement.
 	> Hint, when first removing the instance variable `connection` we can ***Lean on the compiler*** to see which instances we need to remove
 	> Or, of course, use `Find and Replace` to update the code.
 
-- Extract holiday calculation
+- Extract holiday calculation<br/>
 
 	Next, extract the holiday calculation into a new method.
 	Use **Slide statement** refactoring to move the `isHoliday` variable declaration closer to the using. <br/>
 	Apply **Extract method** on the holiday calculation part.<br/>
 	This new method is now a *seam*, that we can use later to modify behavior under test.<br/>
 
-- Extract base price retrieval
+- Extract base price retrieval<br/>
 
 	Due to the `using` scope, we cannot simply extract the base price retrieval. <br/>
 	First, change the `using` scope so that it ends after `double result = (int)(await costCmd.ExecuteScalarAsync());`.<br/>
@@ -111,7 +111,7 @@ Ensure that the `TestingPricesController` can be created from `PricesControllerB
 
 In the class `PricesTests`, there are already a few suggestions for *characterization tests* defined.
 Let's start with the first suggestion `GetAsync_price_for_child_nightticket` using *characterization test* approach:
-* Get the code in test harness.
+* Get the code in test harness.<br/>
 
 	For this we need to arrange an int constant that is within the age range for a child ticket, so `age < 6`. let's take 5 as our magic child value.<br/>
 	And a "night" ticket type.<br/>
@@ -135,13 +135,13 @@ Let's start with the first suggestion `GetAsync_price_for_child_nightticket` usi
         }
 ```
 
-* Write an assertion that fails
+* Write an assertion that fails<br/>
 	For example: `price.Should().Be("");`
 
-* Let the failure tell what the behaviour is.
+* Let the failure tell what the behaviour is.<br/>
 	For this, simply run the test.
 
-* Change the assertion to the expected value.
+* Change the assertion to the expected value.<br/>
 
 	As this currently still returns an `OkObjectResult`, cast the `price` to the correct type and evaluate the value using the actual returned value.
 	```c#
@@ -152,21 +152,21 @@ Let's start with the first suggestion `GetAsync_price_for_child_nightticket` usi
 	As a best practice, change the name of the test to also incorporate the should part of the test.<br/>
 	So for this test, the correct name would be: `GetAsync_price_for_child_nightticket_should_be_free`
 
-* Repeat
+* Repeat<br/>
 	(We will do this later, please read on)
 	
 Before filling in the other suggested tests, let's first look at the ***actual*** behaviour of the "end of day" discount for an adult.<br/>
 Start by creating a new test that tests what the behaviour is if we book a ticket for an adult for tomorrow after the "end of day" discount time.<br/>
 As we do not know the actual outcome, start by describing the setup: `GetAsync_price_for_adult_dayticket_after_endofday_time_for_tomorrow`<br/>
 Then:
-* Get the code in test harness.
+* Get the code in test harness.<br/>
 	> Hint, use the `.WithDayTicket().WithEndOfDayDiscountTime()` methods to configure the `PricesController` correctly
 
-* Write an assertion that fails.
+* Write an assertion that fails.<br/>
 
 	For example: `price.Should().Be("");`
 
-* Let the failure tell what the behaviour is.
+* Let the failure tell what the behaviour is.<br/>
 
 	For this, simply run the test.<br/>
 	And here we will find out that there is a difference between the described behaviour (a price of 35) and the actual behaviour (a price of 34).<br/>
@@ -174,7 +174,7 @@ Then:
 	> **Note** If you find such a bug in a real refactoring, you can fix it *only if and when* you know its an previously unfound bug 
 	> and do this of course after refactoring. Proceed with caution however as other code or workflows might depend on this "undocumented feature".
 
-* Change the assertion to the expected value.
+* Change the assertion to the expected value.<br/>
 	Again, as we do not want to mix refactoring with adding features/bugfixing, document the actual incorrect for now in the assertion:
 	```c#
 	((OkObjectResult)price).Value.Should().Be("{ \"Cost\": 34}");
@@ -198,9 +198,9 @@ After all `return`s have been replaced, this allows us the apply the **Extract m
 Run tests to verify.
 
 #### Next, encapsulate the SQL queries:
-* Create a new folder repositories, add new class PriceRepository. Using the **Move Method**, move `RetrieveBasePrice` into this new class.
-	*Note:* Copy the `GetConnection` method as well.
-	Change the accessibility modifiers to a `public` method. 
+* Create a new folder repositories, add new class PriceRepository. Using the **Move Method**, move `RetrieveBasePrice` into this new class.<br/>
+	*Note:* Copy the `GetConnection` method as well.<br/>
+	Change the accessibility modifiers to a `public` method. <br/>
 	Keep the source method with a call to the target class:
 	```c#
 		protected virtual async Task<double> RetrieveBasePrice(string liftPassType)
@@ -218,7 +218,7 @@ Run tests to verify.
         }
 	```
 
-* Apply the **Extract interface** refactoring on `PriceRepository`. Hint: use the quick actions menu on `PriceRepository`
+* Apply the **Extract interface** refactoring on `PriceRepository`. Hint: use the quick actions menu on `PriceRepository`<br/>
 	Create a new `private readonly IPriceRepository repository;` in `PricesController` and use the quick actions menu to add it to the constructor.
 
 	Add `services.AddTransient<IPriceRepository, PriceRepository>();` to `Startup.ConfigureServices`
