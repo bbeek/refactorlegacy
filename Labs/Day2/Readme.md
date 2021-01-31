@@ -6,8 +6,8 @@ Plus if you book on the same day for which you request a ticket,
 you might be eligible for either a "early bird" or a "end of day" discount depending on the booking time and your age
 
 There's a new feature request, be able to get the price for several lift passes, not just one. 
-Currently the pricing for a single lift pass is implemented, unfortunately the code as it is designed is ***not reusable***.
-You are going to ***break dependencies*** to add *characterization tests* in place that enables further refactoring 
+Currently the pricing for a single lift pass is implemented, unfortunately the code as it is designed is ***not reusable***.<br/>
+You are going to **break dependencies** to add *characterization tests* in place that enables further refactoring 
 so that the new feature requires minimum effort to implement.
 
 ## Steps
@@ -15,10 +15,11 @@ so that the new feature requires minimum effort to implement.
 ### 1. Breaking dependencies
 
 #### Extract and encapsulate SQL queries
-- Remove unwanted side-effects from the constructor, extract `connection`
+- Remove unwanted side-effects from the constructor, extract `connection`.
+
 	The `connection` instance variable needs to be broken in order to get the code into a test harness.
 
-	See if you can extract the code for creating the `connection`.
+	See if you can extract the code for creating the `connection`.<br/>
 	As the current state does not bring up the **Extract method** option in the quick actions menu, 
 	start with *extracting* the `SqlConnection` creation by changing `connection` into a local variable by adding `var` keyword.
 	```c#
@@ -45,12 +46,14 @@ so that the new feature requires minimum effort to implement.
 	> Or, of course, use `Find and Replace` to update the code.
 
 - Extract holiday calculation
+
 	Next, extract the holiday calculation into a new method.
 	Use **Slide statement** refactoring to move the `isHoliday` variable declaration closer to the using. <br/>
 	Apply **Extract method** on the holiday calculation part.<br/>
 	This new method is now a *seam*, that we can use later to modify behavior under test.<br/>
 
 - Extract base price retrieval
+
 	Due to the `using` scope, we cannot simply extract the base price retrieval. <br/>
 	First, change the `using` scope so that it ends after `double result = (int)(await costCmd.ExecuteScalarAsync());`.<br/>
 	You'll see that the `result` variable is used throughout the rest of the method.<br/>
@@ -77,6 +80,7 @@ By making use of `this.Request.Query`, it is extremely hard to get the method to
 * From the original `GetAsync` method, remove all lines apart from `int? age = this.Request.Query["age"] != StringValues.Empty ? Int32.Parse(this.Request.Query["age"]) : null;` and call copied method, as such `return await GetAsync(age);`
 
 * Repeat adding parameters for `Query["type"]` and `Query["date"]`.
+
 	Here, also add parameters to the extracted `RetrieveBasePrice` and `IsHoliday` methods
 	For the latter ensure that you use the correct type declaration as the existence to the "date" query string is also checked.
 
@@ -108,7 +112,8 @@ Ensure that the `TestingPricesController` can be created from `PricesControllerB
 In the class `PricesTests`, there are already a few suggestions for *characterization tests* defined.
 Let's start with the first suggestion `GetAsync_price_for_child_nightticket` using *characterization test* approach:
 * Get the code in test harness.
-	for this we need to arrange an int constant that is within the age range for a child ticket, so < 6. let's take 5 as our magic child value.<br/>
+
+	For this we need to arrange an int constant that is within the age range for a child ticket, so `age < 6`. let's take 5 as our magic child value.<br/>
 	And a "night" ticket type.<br/>
 	Next, using the `PricesControllerBuilder`, build a `sut` with the correct ticket type defined.
 
@@ -137,6 +142,7 @@ Let's start with the first suggestion `GetAsync_price_for_child_nightticket` usi
 	For this, simply run the test.
 
 * Change the assertion to the expected value.
+
 	As this currently still returns an `OkObjectResult`, cast the `price` to the correct type and evaluate the value using the actual returned value.
 	```c#
 	((OkObjectResult)price).Value.Should().Be("{ \"Cost\": 0}");
@@ -154,12 +160,14 @@ Start by creating a new test that tests what the behaviour is if we book a ticke
 As we do not know the actual outcome, start by describing the setup: `GetAsync_price_for_adult_dayticket_after_endofday_time_for_tomorrow`<br/>
 Then:
 * Get the code in test harness.
-	Hint, use the `.WithDayTicket().WithEndOfDayDiscountTime()` methods to configure the `PricesController` correctly
+	> Hint, use the `.WithDayTicket().WithEndOfDayDiscountTime()` methods to configure the `PricesController` correctly
 
-* Write an assertion that fails
+* Write an assertion that fails.
+
 	For example: `price.Should().Be("");`
 
 * Let the failure tell what the behaviour is.
+
 	For this, simply run the test.<br/>
 	And here we will find out that there is a difference between the described behaviour (a price of 35) and the actual behaviour (a price of 34).<br/>
 	As we are still in the refactoring phase, we will *not* fix this bug as we do not want to mix refactoring with adding features<br/>
