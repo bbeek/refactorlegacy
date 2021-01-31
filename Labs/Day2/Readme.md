@@ -20,6 +20,7 @@ so that the new feature requires minimum effort to implement.
 	The `connection` instance variable needs to be broken in order to get the code into a test harness.
 
 	See if you can extract the code for creating the `connection`.<br/>
+
 	As the current state does not bring up the **Extract method** option in the quick actions menu, 
 	start with *extracting* the `SqlConnection` creation by changing `connection` into a local variable by adding `var` keyword.
 	```c#
@@ -60,6 +61,10 @@ so that the new feature requires minimum effort to implement.
 	Meaning that we will need to split the variable declaration from the variable assignment.<br/>
 	Change into
 	```c#
+	using (var costCmd = new SqlCommand(@"SELECT cost FROM base_price WHERE type = @type", connection))
+    {
+        costCmd.Parameters.Add(new SqlParameter("@type", this.Request.Query["type"].ToString()) { DbType = DbType.String, Size = 255 });
+		costCmd.Prepare();
 		double result;
 		result = (int)(await costCmd.ExecuteScalarAsync());
 	}
@@ -67,7 +72,7 @@ so that the new feature requires minimum effort to implement.
 	And using the **Slide statement** refactoring, move the variable declaration out of the now much shorter `using` block.
 
 	Apply **Extract method** on the `using` block, including the `double result` variable declaration.
-	Give this new method a descriptive name. This is now our second seam.
+	Give this new method a descriptive name. This is now our second *seam*.
 
 Your `PricesController` class should now look like: `Day2\solutions\1.1 Extracted SQL\PricesController.cs`
 
@@ -100,7 +105,7 @@ Apply the dependency breaking technique **Replace global reference with getter**
 Your `PricesController` class should now look something like: `Day2\solutions\1.3 Replace global reference with getter\PricesController.cs` 
 
 ### 2. Apply characterization testing
-With all dependencies, that impact our ability to fully test the code we want to test, broken, let's apply ***Characterization testing** to capture the existing behaviour.
+With all dependencies, that impact our ability to fully test the code we want to test, broken, let's apply ***Characterization testing*** to capture the existing behaviour.
 
 But first, we need to apply **subclass and override method** technique on the extracted methods.
 * Apply step 1-3 on `IsHoliday` and `RetrieveCost`
@@ -124,11 +129,11 @@ Let's start with the first suggestion `GetAsync_price_for_child_nightticket` usi
         {
             // Arrange
             const int child = 5;
-            const string ticket = "night";
+            const string nightTicket = "night";
             var sut = new PricesControllerBuilder().WithNightTicket().Build();
 
             // Act
-            var price = await sut.GetAsync(child, ticket, null);
+            var price = await sut.GetAsync(child, nightTicket, null);
 
             // Assert
             // TODO: Verify actual behaviour
@@ -172,7 +177,7 @@ Then:
 	And here we will find out that there is a difference between the described behaviour (a price of 35) and the actual behaviour (a price of 34).<br/>
 	As we are still in the refactoring phase, we will *not* fix this bug as we do not want to mix refactoring with adding features<br/>
 	> **Note** If you find such a bug in a real refactoring, you can fix it *only if and when* you know its an previously unfound bug 
-	> and do this of course after refactoring. Proceed with caution however as other code or workflows might depend on this "undocumented feature".
+	> and do this, of course, after refactoring. Proceed with caution however as other code or workflows might depend on this "undocumented feature".
 
 * Change the assertion to the expected value.<br/>
 	Again, as we do not want to mix refactoring with adding features/bugfixing, document the actual incorrect for now in the assertion:
