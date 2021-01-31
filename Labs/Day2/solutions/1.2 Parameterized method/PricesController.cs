@@ -56,7 +56,7 @@ namespace Day2.Controllers
         {
             int? age = this.Request.Query["age"] != StringValues.Empty ? Int32.Parse(this.Request.Query["age"]) : null;
             string liftPassType = this.Request.Query["type"];
-            DateTime? skiDate = this.Request.Query["date"] != StringValues.Empty ? DateTime.ParseExact(this.Request.Query["date"], "yyyy-MM-dd", CultureInfo.InvariantCulture): null;
+            DateTime? skiDate = this.Request.Query["date"] != StringValues.Empty ? DateTime.ParseExact(this.Request.Query["date"], "yyyy-MM-dd", CultureInfo.InvariantCulture) : null;
 
             return await GetAsync(age, liftPassType, skiDate);
 
@@ -82,7 +82,7 @@ namespace Day2.Controllers
 
                     if (skiDate.HasValue)
                     {
-                        
+
                         if (!isHoliday && (int)skiDate.Value.DayOfWeek == 1)
                         {
                             reduction = 35;
@@ -105,23 +105,23 @@ namespace Day2.Controllers
                         {
                             if (age > 64)
                             {
-								// Early bird discount
-								if (DateTime.Now.Hour < 9)
-								{
-									reduction += 15;
-								}
-								
+                                // Early bird discount
+                                if (DateTime.Now.Hour < 9)
+                                {
+                                    reduction += 15;
+                                }
+
                                 double cost = result * .75 * (1 - reduction / 100.0);
                                 return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
                             }
                             else
                             {
-								// End of day discount
-								if (DateTime.Now.Hour > 15)
-								{
-									reduction += 5;
-								}
-								
+                                // End of day discount
+                                if (DateTime.Now.Hour > 15)
+                                {
+                                    reduction += 5;
+                                }
+
                                 double cost = result * (1 - reduction / 100.0);
                                 return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
                             }

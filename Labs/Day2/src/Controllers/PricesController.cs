@@ -22,7 +22,7 @@ namespace Day2.Controllers
         }
 
         [HttpPut]
-        public async Task<string> PutAsync()
+        public async Task<ActionResult> PutAsync()
         {
             int liftPassCost = int.Parse(this.Request.Query["cost"]);
             string liftPassType = this.Request.Query["type"].ToString();
@@ -45,17 +45,17 @@ namespace Day2.Controllers
                 await command.ExecuteNonQueryAsync();
             }
 
-            return "";
+            return Ok("");
         }
 
         [HttpGet]
-        public async Task<string> Get()
+        public async Task<ActionResult> GetAsync()
         {
             int? age = this.Request.Query["age"] != StringValues.Empty ? Int32.Parse(this.Request.Query["age"]) : null;
 
             using (var costCmd = new SqlCommand(@"SELECT cost FROM base_price WHERE type = @type", connection))
             {
-                costCmd.Parameters.Add(new SqlParameter("@type", this.Request.Query["type"].ToString()) { DbType = DbType.String, Size=255 });
+                costCmd.Parameters.Add(new SqlParameter("@type", this.Request.Query["type"].ToString()) { DbType = DbType.String, Size = 255 });
                 costCmd.Prepare();
                 double result = (int)(await costCmd.ExecuteScalarAsync());
 
@@ -64,7 +64,7 @@ namespace Day2.Controllers
 
                 if (age != null && age < 6)
                 {
-                    return "{ \"cost\": 0}";
+                    return Ok("{ \"Cost\": 0}");
                 }
                 else
                 {
@@ -116,26 +116,44 @@ namespace Day2.Controllers
                         // TODO apply reduction for others
                         if (age != null && age < 15)
                         {
-                            return "{ \"cost\": " + (int)Math.Ceiling(result * .7) + "}";
+                            return Ok("{ \"Cost\": " + (int)Math.Ceiling(result * .7) + "}");
                         }
                         else
                         {
                             if (age == null)
                             {
+                                // End of day discount
+                                if (DateTime.Now.Hour > 15)
+                                {
+                                    reduction += 5;
+                                }
+
                                 double cost = result * (1 - reduction / 100.0);
-                                return "{ \"cost\": " + (int)Math.Ceiling(cost) + "}";
+                                return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
                             }
                             else
                             {
                                 if (age > 64)
                                 {
+                                    // Early bird discount
+                                    if (DateTime.Now.Hour < 9)
+                                    {
+                                        reduction += 15;
+                                    }
+
                                     double cost = result * .75 * (1 - reduction / 100.0);
-                                    return "{ \"cost\": " + (int)Math.Ceiling(cost) + "}";
+                                    return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
                                 }
                                 else
                                 {
+                                    // End of day discount
+                                    if (DateTime.Now.Hour > 15)
+                                    {
+                                        reduction += 5;
+                                    }
+
                                     double cost = result * (1 - reduction / 100.0);
-                                    return "{ \"cost\": " + (int)Math.Ceiling(cost) + "}";
+                                    return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
                                 }
                             }
                         }
@@ -146,25 +164,16 @@ namespace Day2.Controllers
                         {
                             if (age > 64)
                             {
-                                return "{ \"cost\": " + (int)Math.Ceiling(result * .4) + "}";
+                                return Ok("{ \"Cost\": " + (int)Math.Ceiling(result * .4) + "}");
                             }
                             else
                             {
-                                if (DateTime.Now.Hour < 9)
-                                {
-                                    return "{ \"cost\": " + (int)Math.Ceiling(result * .2) + "}";
-                                }
-                                else
-                                {
-                                    return "{ \"cost\": " + result + "}";
-                                }
-
-                                
+                                return Ok("{ \"Cost\": " + result + "}");
                             }
                         }
                         else
                         {
-                            return "{ \"cost\": 0}";
+                            return Ok("{ \"Cost\": 0}");
                         }
                     }
                 }

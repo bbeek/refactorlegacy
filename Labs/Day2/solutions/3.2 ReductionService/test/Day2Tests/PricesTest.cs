@@ -252,7 +252,7 @@ namespace Day2Tests
             // Assert
             ((OkObjectResult)price).Value.Should().Be("{ \"Cost\": 21}");
         }
-		
+
         [Fact]
         public async Task GetAsync_price_for_unknown_age_nightticket_should_be_free()
         {
@@ -266,7 +266,7 @@ namespace Day2Tests
             // Assert
             ((OkObjectResult)price).Value.Should().Be("{ \"Cost\": 0}");
         }
-		
+
         private DateTime GetNextMonday()
         {
             return new LocalDate().Next(IsoDayOfWeek.Monday).ToDateTimeUnspecified();

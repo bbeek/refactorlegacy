@@ -89,12 +89,12 @@ namespace Day2.Controllers
                     {
                         if (age == null)
                         {
-							// End of day discount
-							if (DateTime.Now.Hour > 15)
-							{
-								reduction += 5;
-							}
-							
+                            // End of day discount
+                            if (DateTime.Now.Hour > 15)
+                            {
+                                reduction += 5;
+                            }
+
                             double cost = result * (1 - reduction / 100.0);
                             return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
                         }
@@ -102,25 +102,25 @@ namespace Day2.Controllers
                         {
                             if (age > 64)
                             {
-								// Early bird discount
-								if (DateTime.Now.Hour < 9)
-								{
-									reduction += 15;
-								}
-								
+                                // Early bird discount
+                                if (DateTime.Now.Hour < 9)
+                                {
+                                    reduction += 15;
+                                }
+
                                 double cost = result * .75 * (1 - reduction / 100.0);
                                 return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
                             }
                             else
                             {
-								// End of day discount
-								if (DateTime.Now.Hour > 15)
-								{
-									reduction += 5;
-								}
-								
-								double cost = result * (1 - reduction / 100.0);
-								return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
+                                // End of day discount
+                                if (DateTime.Now.Hour > 15)
+                                {
+                                    reduction += 5;
+                                }
+
+                                double cost = result * (1 - reduction / 100.0);
+                                return Ok("{ \"Cost\": " + (int)Math.Ceiling(cost) + "}");
                             }
                         }
                     }
@@ -135,7 +135,7 @@ namespace Day2.Controllers
                         }
                         else
                         {
-							return Ok("{ \"Cost\": " + result + "}");
+                            return Ok("{ \"Cost\": " + result + "}");
                         }
                     }
                     else
