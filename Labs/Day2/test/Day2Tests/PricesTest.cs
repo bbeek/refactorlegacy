@@ -1,6 +1,7 @@
 using Day2.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using NodaTime;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -86,6 +87,22 @@ namespace Day2Tests
             // Assert
             // TODO: Verify actual behaviour
 
+        }
+
+        [Fact]
+        public async Task GetAsync_price_for_unknown_age_nightticket()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+            // TODO: Verify actual behaviour
+        }
+
+        private DateTime GetNextMonday()
+        {
+            return new LocalDate().Next(IsoDayOfWeek.Monday).ToDateTimeUnspecified();
         }
     }
 }
