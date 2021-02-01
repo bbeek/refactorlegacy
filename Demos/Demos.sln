@@ -35,29 +35,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Day 2", "Day 2", "{DC9D3FFF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{76414E9C-162C-4094-ABB8-E47C9E78397C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterizeConstructor", "ParameterizeConstructor\ParameterizeConstructor.csproj", "{A7920B74-7BE4-4743-A1BB-79FF79F36FC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParameterizeConstructor", "ParameterizeConstructor\ParameterizeConstructor.csproj", "{A7920B74-7BE4-4743-A1BB-79FF79F36FC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterizeConstructorTests", "Tests\ParameterizeConstructorTests\ParameterizeConstructorTests.csproj", "{E7EBC12B-BECA-4E03-BAD7-1BCF75E8DF47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParameterizeConstructorTests", "Tests\ParameterizeConstructorTests\ParameterizeConstructorTests.csproj", "{E7EBC12B-BECA-4E03-BAD7-1BCF75E8DF47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplaceGlobalReference", "ReplaceGlobalReference\ReplaceGlobalReference.csproj", "{AE7EFA70-958C-4FA5-8161-66A0FD648E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceGlobalReference", "ReplaceGlobalReference\ReplaceGlobalReference.csproj", "{AE7EFA70-958C-4FA5-8161-66A0FD648E32}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExternalAPI", "ExternalAPI", "{0E47C244-8FEA-4660-AB30-C722476F78E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonObjects", "External\CommonObjects\CommonObjects.csproj", "{DFE1936A-6398-4033-AB14-58FCB501FCE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonObjects", "External\CommonObjects\CommonObjects.csproj", "{DFE1936A-6398-4033-AB14-58FCB501FCE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplaceGlobalReferenceTests", "Tests\ReplaceGlobalReferenceTests\ReplaceGlobalReferenceTests.csproj", "{CAC3303C-A2EF-42F0-B084-6877A5F9451B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceGlobalReferenceTests", "Tests\ReplaceGlobalReferenceTests\ReplaceGlobalReferenceTests.csproj", "{CAC3303C-A2EF-42F0-B084-6877A5F9451B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractInterface", "ExtractInterface\ExtractInterface.csproj", "{C588E5E0-300E-4529-AD15-72854BFAA8A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractInterface", "ExtractInterface\ExtractInterface.csproj", "{C588E5E0-300E-4529-AD15-72854BFAA8A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtractInterfaceTests", "Tests\ExtractInterfaceTests\ExtractInterfaceTests.csproj", "{E20E4EC1-FA0B-4B90-B374-906173CA7A43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractInterfaceTests", "Tests\ExtractInterfaceTests\ExtractInterfaceTests.csproj", "{E20E4EC1-FA0B-4B90-B374-906173CA7A43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SproutMethod", "SproutMethod\SproutMethod.csproj", "{783576A7-4161-4A62-9DFA-04D755665F7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SproutMethod", "SproutMethod\SproutMethod.csproj", "{783576A7-4161-4A62-9DFA-04D755665F7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SproutMethodTests", "Tests\SproutMethodTests\SproutMethodTests.csproj", "{76B84AE6-6789-4626-8CBB-AEDDC03C8025}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SproutMethodTests", "Tests\SproutMethodTests\SproutMethodTests.csproj", "{76B84AE6-6789-4626-8CBB-AEDDC03C8025}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SproutClass", "SproutClass\SproutClass.csproj", "{429B9117-26E5-4766-8300-1FFEA0D39951}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SproutClass", "SproutClass\SproutClass.csproj", "{429B9117-26E5-4766-8300-1FFEA0D39951}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SproutClassTests", "Tests\SproutClassTests\SproutClassTests.csproj", "{1C4BAE88-FF2F-4FED-89A9-23FECECFB1AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SproutClassTests", "Tests\SproutClassTests\SproutClassTests.csproj", "{1C4BAE88-FF2F-4FED-89A9-23FECECFB1AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterizeMethod", "ParameterizeMethod\ParameterizeMethod.csproj", "{E3342682-DC93-4BC3-BB78-7A680AEEFD2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterizeMethodTests", "Tests\ParameterizeMethodTests\ParameterizeMethodTests.csproj", "{E165C1AC-0588-43AD-9529-32F26E460AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubclassAndOverride", "SubclassAndOverride\SubclassAndOverride.csproj", "{E7EEB008-7014-495E-982B-B3B82487E3C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubclassAndOverrideTests", "Tests\SubclassAndOverrideTests\SubclassAndOverrideTests.csproj", "{6375E535-F19B-475E-8986-5046942C82E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -157,6 +165,22 @@ Global
 		{1C4BAE88-FF2F-4FED-89A9-23FECECFB1AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C4BAE88-FF2F-4FED-89A9-23FECECFB1AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C4BAE88-FF2F-4FED-89A9-23FECECFB1AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3342682-DC93-4BC3-BB78-7A680AEEFD2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3342682-DC93-4BC3-BB78-7A680AEEFD2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3342682-DC93-4BC3-BB78-7A680AEEFD2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3342682-DC93-4BC3-BB78-7A680AEEFD2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E165C1AC-0588-43AD-9529-32F26E460AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E165C1AC-0588-43AD-9529-32F26E460AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E165C1AC-0588-43AD-9529-32F26E460AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E165C1AC-0588-43AD-9529-32F26E460AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7EEB008-7014-495E-982B-B3B82487E3C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7EEB008-7014-495E-982B-B3B82487E3C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7EEB008-7014-495E-982B-B3B82487E3C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7EEB008-7014-495E-982B-B3B82487E3C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6375E535-F19B-475E-8986-5046942C82E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6375E535-F19B-475E-8986-5046942C82E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6375E535-F19B-475E-8986-5046942C82E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6375E535-F19B-475E-8986-5046942C82E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -188,6 +212,10 @@ Global
 		{76B84AE6-6789-4626-8CBB-AEDDC03C8025} = {76414E9C-162C-4094-ABB8-E47C9E78397C}
 		{429B9117-26E5-4766-8300-1FFEA0D39951} = {DC9D3FFF-B935-4453-8A14-954D6C033BA1}
 		{1C4BAE88-FF2F-4FED-89A9-23FECECFB1AB} = {76414E9C-162C-4094-ABB8-E47C9E78397C}
+		{E3342682-DC93-4BC3-BB78-7A680AEEFD2A} = {DC9D3FFF-B935-4453-8A14-954D6C033BA1}
+		{E165C1AC-0588-43AD-9529-32F26E460AEE} = {76414E9C-162C-4094-ABB8-E47C9E78397C}
+		{E7EEB008-7014-495E-982B-B3B82487E3C1} = {DC9D3FFF-B935-4453-8A14-954D6C033BA1}
+		{6375E535-F19B-475E-8986-5046942C82E5} = {76414E9C-162C-4094-ABB8-E47C9E78397C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14716A14-D4D3-4F86-ACCA-80777A692904}
