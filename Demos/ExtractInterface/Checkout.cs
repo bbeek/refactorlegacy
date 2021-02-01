@@ -4,9 +4,9 @@ namespace ExtractInterface
 {
     public class Checkout
     {
-        private readonly IReceiptRepository repository;
+        private readonly ReceiptRepository repository;
 
-        public Checkout(IReceiptRepository repository)
+        public Checkout(ReceiptRepository repository)
         {
             this.repository = repository;
         }

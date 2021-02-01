@@ -31,7 +31,7 @@ or
 
 ## Disadvantage
 Only works on classes you can edit (obviously), meaning that this does not directly work on hard dependencies outside of you control.
-Think external libraries.
+Think external libraries. (Use *Skin and Wrap* for these hard dependencies). Out-of-scope for these labs
 Does slightly increase build time as it creates more files to compile.
 
 

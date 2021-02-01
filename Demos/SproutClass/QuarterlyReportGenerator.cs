@@ -25,8 +25,6 @@ namespace SproutClass
 
             if (results.Any())
             {
-                var producer = new QuarterlyReporTableHeaderProducer();
-                pageText += producer.MakeHeader();
                 foreach(var item in results)
                 {
                     pageText += "<tr>";

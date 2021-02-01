@@ -6,27 +6,13 @@ namespace ReplaceGlobalReference
     {
         public bool IsActive()
         {
-            return MilliSeconds() % 2 == 0;
-        }
-
-        private long MilliSeconds()
-        {
-            return (long)GetDateTime().TimeOfDay.TotalMilliseconds;
+            return (long)DateTime.Now.TimeOfDay.TotalMilliseconds % 2 == 0;
         }
 
         public bool IsCrazySalesDay()
         {
-            return DayOfTheWeek().Equals(DayOfWeek.Friday); ;
+            return DateTime.Now.DayOfWeek.Equals(DayOfWeek.Friday); ;
         }
 
-        private DayOfWeek DayOfTheWeek()
-        {
-            return GetDateTime().DayOfWeek;
-        }
-
-        protected virtual DateTime GetDateTime()
-        {
-            return DateTime.Now;
-        }
     }
 }
