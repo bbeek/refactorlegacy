@@ -14,7 +14,7 @@ so that the new feature requires minimum effort to implement.
 
 ### 1. Breaking dependencies
 
-#### Extract and encapsulate SQL queries
+#### 1.1 Extract and encapsulate SQL queries
 - Remove unwanted side-effects from the constructor, extract `connection`.<br/>
 
 	The `connection` instance variable needs to be broken in order to get the code into a test harness.
@@ -48,17 +48,22 @@ so that the new feature requires minimum effort to implement.
 
 - Extract holiday calculation<br/>
 
-	Next, extract the holiday calculation into a new method.
-	Use **Slide statement** refactoring to move the `isHoliday` variable declaration closer to the using. <br/>
-	Apply **Extract method** on the holiday calculation part.<br/>
+	Next, extract the holiday calculation into a new method. The holiday calculation is the using block below the comment
+	```c#
+	// Calculate if selected date is a holiday
+	```
+	Use **Slide statement** refactoring to move the `isHoliday` variable declaration closer to the first using below the comment above. <br/>
+	Apply **Extract method** on the holiday calculation part. Let's call the new method `IsHoliday` and delete the comment as the <br/>
 	This new method is now a *seam*, that we can use later to modify behavior under test.<br/>
 
 - Extract base price retrieval<br/>
 
-	Due to the `using` scope, we cannot simply extract the base price retrieval. <br/>
+	Due to the `using` scope, we cannot simply extract the base price retrieval. The base price retrieval is the very first using and
+	ends after the `ExecuteScalarAsync` method following the comment `// Retrieve the base price`<br/>
 	First, change the `using` scope so that it ends after `double result = (int)(await costCmd.ExecuteScalarAsync());`.<br/>
 	You'll see that the `result` variable is used throughout the rest of the method.<br/>
 	Meaning that we will need to split the variable declaration from the variable assignment.<br/>
+	
 	Change into
 	```c#
 	using (var costCmd = new SqlCommand(@"SELECT cost FROM base_price WHERE type = @type", connection))
@@ -66,6 +71,7 @@ so that the new feature requires minimum effort to implement.
         costCmd.Parameters.Add(new SqlParameter("@type", this.Request.Query["type"].ToString()) { DbType = DbType.String, Size = 255 });
 		costCmd.Prepare();
 		double result;
+		// Retrieve the base price
 		result = (int)(await costCmd.ExecuteScalarAsync());
 	}
 	```
@@ -79,7 +85,7 @@ Your `PricesController` class should now look like: `Day2\solutions\1.1 Extracte
 With all of the SQL dependencies out of the way, we move on to the next dependency, namely the `this.Request.Query`.<br/>
 By making use of `this.Request.Query`, it is extremely hard to get the method to run in our test harness as we would need to sub the `Request` and the `Query` properties.
 
-#### Parameterize the `GetAsync` method
+#### 1.2 Parameterize the `GetAsync` method
 * Copy the `GetAsync` method below the existing variant.
 * Add `int? age` as parameter to the copied method and remove the `int? age` variable declaration line.
 * From the original `GetAsync` method, remove all lines apart from `int? age = this.Request.Query["age"] != StringValues.Empty ? Int32.Parse(this.Request.Query["age"]) : null;` and call copied method, as such `return await GetAsync(age);`
@@ -93,7 +99,7 @@ Your `PricesController` class should now look something like: `Day2\solutions\1.
 
 Although we are now able to get the parameterized method in our test harness, let's break the last dependency that blocks us from fully testing all characteristics of the GetAsync method.
 
-#### Breaking global dependency
+#### 1.3 Breaking global dependency
 Apply the dependency breaking technique **Replace global reference with getter** on `DateTime.Now.Hour` calls in `GetAsync(..)`.
 > Even though `IsHoliday` method also contains a reference to the global `DateTime.Now` instance, we do not need to remove that dependency as we can already override the `IsHoliday` method.
 > Making this less of an issue at this point in our refactoring journey.
@@ -108,11 +114,12 @@ Your `PricesController` class should now look something like: `Day2\solutions\1.
 With all dependencies, that impact our ability to fully test the code we want to test, broken, let's apply ***Characterization testing*** to capture the existing behaviour.
 
 But first, we need to apply **subclass and override method** technique on the extracted methods.
-* Apply step 1-3 on `IsHoliday` and `RetrieveCost`
-* Apply step 4, create a new testing *subclass* named `TestingPricesController` in the `Day2Tests` project and override the 3 methods.
+* Apply step 1-3 of the **subclass and override method** on `IsHoliday` and `RetrieveBasePrice` methods
+* For applying step 4, create a new testing *subclass* named `TestingPricesController` in the `Day2Tests` project and override the 3 methods.
 
 In order to help write readable tests, a *Builder pattern* class has already been provided.
-Ensure that the `TestingPricesController` can be created from `PricesControllerBuilder` with the correct behaviour.
+Ensure that the `TestingPricesController` can be created from `PricesControllerBuilder` with the correct behaviour by ensuring that the `Build` method returns a `TestingPricesController`.
+Or look into the provided solution for the suggested setup. 
 
 In the class `PricesTests`, there are already a few suggestions for *characterization tests* defined.
 Let's start with the first suggestion `GetAsync_price_for_child_nightticket` using *characterization test* approach:
@@ -187,10 +194,9 @@ Then:
 	Plus update the name of the test to its current form, `GetAsync_price_for_adult_dayticket_after_endofday_time_for_tomorrow_should_return_discounted_price`
 
 
-Now repeat this process for the suggested tests to practice some more.
-
-If you think you've practiced enough or finished all of the behaviours, check `Labs\Day2\solutions\2 Characterization tests` for the finished Day2Tests project state
-If you did not document all behaviours, copy the `PricesTest` from the solution to your own project as a safety net for future refactoring.
+If you want to pratice a bit more, repeat this process for the suggested tests.
+Or if you think you've practiced enough and got the hang of it (or finished all of the behaviours), check `Labs\Day2\solutions\2 Characterization tests` for the finished Day2Tests project state
+In case you did not document all behaviours, copy the `PricesTest` from the solution to your own project as a safety net for future refactoring.
 
 ### 3. Extract logic
 With our code now no longer being "legacy" code, as it is covered by unittests, let's move to the fourth step of *Refactoring legacy code approach*: refactor.
@@ -202,8 +208,8 @@ Thus let's introduce a new `response` variable via 'string response;', return th
 After all `return`s have been replaced, this allows us the apply the **Extract method** refactoring for a `CalculatePrice` method.<br/>
 Run tests to verify.
 
-#### Next, encapsulate the SQL queries:
-* Create a new folder repositories, add new class PriceRepository. Using the **Move Method**, move `RetrieveBasePrice` into this new class.<br/>
+#### 3.1 Next, encapsulate the SQL queries:
+* Create a new folder repositories, add new class PriceRepository. Using the **Move Method**, move `RetrieveBasePrice` into this new class named `PriceRepository`.<br/>
 	*Note:* Copy the `GetConnection` method as well.<br/>
 	Change the accessibility modifiers to a `public` method. <br/>
 	Keep the source method with a call to the target class:
@@ -250,7 +256,7 @@ Run tests to verify.
 
 * Inline and remove the `IsHoliday` and `RetrieveBasePrice` in `PricesController`. Plus remove the temporary override methods and fields from `TestingPricesController`
 
-#### Introduce a `ReductionService`
+#### 3.2 Introduce a `ReductionService`
 Currently the only temporary override method still standing is the `GetHour` method. We could move this into a generic `DateTimeProvider` and be done with it.
 However, there is more value in actually encapsulating what we use this global reference for.
 
@@ -357,6 +363,7 @@ Before extracting the `CalculatePrice` into a new class, we are first going to c
 	var basePrice = new Ticket(await repository.RetrieveBasePrice(liftPassType));
 	double result = basePrice.Cost;
 	```
+
 * Apply **Inline variable** on `result` using *Quick Actions context menu*.
 * Apply **Extract method** on `double cost = basePrice.Cost * (1 - reduction / 100.0);` and name the new method `ApplyReductionPercentage`
 * Move the `ApplyReductionPercentage` to `Ticket` class, let it return `Ticket` and adjust it to fit the context (remove `basePrice` parameter)
@@ -372,6 +379,8 @@ Before extracting the `CalculatePrice` into a new class, we are first going to c
 	response = "{ \"Cost\": " + (int)Math.Ceiling(cost.Cost) + "}";
 	```
 * Run all tests.
+
+
 * For the senior discount for non night tickets, notice that we first apply a 25 percentage reduction and then a reduction.
 	```c#
 		var cost = basePrice
@@ -380,7 +389,9 @@ Before extracting the `CalculatePrice` into a new class, we are first going to c
         response = "{ \"Cost\": " + (int)Math.Ceiling(cost.Cost) + "}";
 	```
 * Run tests to verify that this calculation is correct.
+
 * Apply this same logic to the other reductions
+
 * Extract `(int)Math.Ceiling(cost.Cost)` to a method named `RoundUp`
 * Move `RoundUp` to `Ticket`, return `Ticket` as type and adjust it to fit the new context.
 * Replace all usage of `(int)Math.Ceiling(cost.Cost)` with `.RoundUp()` pipeline. Solve compiler errors with `response = "{ \"Cost\": " + cost.Cost + "}"`

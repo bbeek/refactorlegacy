@@ -57,6 +57,7 @@ namespace Day2.Controllers
             {
                 costCmd.Parameters.Add(new SqlParameter("@type", this.Request.Query["type"].ToString()) { DbType = DbType.String, Size = 255 });
                 costCmd.Prepare();
+                // Retrieve the base price
                 double result = (int)(await costCmd.ExecuteScalarAsync());
 
                 int reduction;
@@ -72,6 +73,7 @@ namespace Day2.Controllers
 
                     if (!"night".Equals(this.Request.Query["type"]))
                     {
+                        // Calculate if selected date is a holiday
                         using (var holidayCmd = new SqlCommand("SELECT * FROM holidays", connection))
                         {
                             holidayCmd.Prepare();
