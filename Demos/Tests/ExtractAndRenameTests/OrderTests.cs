@@ -16,7 +16,7 @@ namespace ExtractAndRenameTests
             var owing = order.PrintOwning();
 
             // Assert
-            owing.Should().EndWithEquivalent($"Amount: 0,00");
+            owing.Should().EndWithEquivalentOf($"Amount: 0,00");
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace ExtractAndRenameTests
             var owing = order.PrintOwning();
 
             // Assert
-            owing.Should().EndWithEquivalent($"Amount: 0,00");
+            owing.Should().EndWithEquivalentOf($"Amount: 0,00");
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace ExtractAndRenameTests
             var owing = order.PrintOwning();
 
             // Assert
-            owing.Should().EndWithEquivalent($"Amount: {expectedPrice}");
+            owing.Should().EndWithEquivalentOf($"Amount: {expectedPrice}");
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace ExtractAndRenameTests
             var owing = order.PrintOwning();
 
             // Assert
-            owing.Should().EndWithEquivalent($"Amount: {expectedPrice}", "Uncapped shipping price would be 110");
+            owing.Should().EndWithEquivalentOf($"Amount: {expectedPrice}", "Uncapped shipping price would be 110");
         }
     }
 }
