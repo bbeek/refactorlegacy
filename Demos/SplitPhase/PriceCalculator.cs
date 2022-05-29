@@ -23,6 +23,7 @@ namespace SplitPhase
         {
             var orderData = order.Split(" ");
             var productPrice = priceList[orderData[0].Split("-")[1]];
+            
             var orderPrice = int.Parse(orderData[1]) * productPrice;
             return orderPrice;
         }
