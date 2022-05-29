@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ReplaceConditionalWithPolymorphism\ReplaceConditionalWithPolymorphism.csproj" />
+    <ProjectReference Include="..\..\SplitPhase\02. SplitPhase.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,33 +3,33 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitPhase", "SplitPhase\SplitPhase.csproj", "{967B141D-F96F-43AF-9A31-1E5063FFA2A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02. SplitPhase", "SplitPhase\02. SplitPhase.csproj", "{967B141D-F96F-43AF-9A31-1E5063FFA2A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{390C0213-05BE-4FEE-8CE6-29B1A2D26B06}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitPhaseTests", "Tests\SplitPhaseTests\SplitPhaseTests.csproj", "{388CAD0E-4BAA-4345-8FEB-18BC13A72983}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02. SplitPhaseTests", "Tests\SplitPhaseTests\02. SplitPhaseTests.csproj", "{388CAD0E-4BAA-4345-8FEB-18BC13A72983}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Day 1", "Day 1", "{C4158DBC-C486-4D3D-AAA4-D34964FAB930}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceConditionalWithPolymorphism", "ReplaceConditionalWithPolymorphism\ReplaceConditionalWithPolymorphism.csproj", "{DD5D1840-FC60-4796-A460-9A9322BDAFF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06. ReplaceConditionalWithPolymorphism", "ReplaceConditionalWithPolymorphism\06. ReplaceConditionalWithPolymorphism.csproj", "{DD5D1840-FC60-4796-A460-9A9322BDAFF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceConditionalWithPolymorphismTests", "Tests\ReplaceConditionalWithPolymorphismTests\ReplaceConditionalWithPolymorphismTests.csproj", "{CD8D08BC-2CF8-4659-A750-8B7CE1B64085}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06. ReplaceConditionalWithPolymorphismTests", "Tests\ReplaceConditionalWithPolymorphismTests\06. ReplaceConditionalWithPolymorphismTests.csproj", "{CD8D08BC-2CF8-4659-A750-8B7CE1B64085}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceLoopWithPipeline", "ReplaceLoopWithPipeline\ReplaceLoopWithPipeline.csproj", "{736E33BA-CCED-4E89-B1EC-FF7E4C75F8CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05. ReplaceLoopWithPipeline", "ReplaceLoopWithPipeline\05. ReplaceLoopWithPipeline.csproj", "{736E33BA-CCED-4E89-B1EC-FF7E4C75F8CC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplaceLoopWithPipelineTests", "Tests\ReplaceLoopWithPipelineTests\ReplaceLoopWithPipelineTests.csproj", "{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05. ReplaceLoopWithPipelineTests", "Tests\ReplaceLoopWithPipelineTests\05. ReplaceLoopWithPipelineTests.csproj", "{9259DE99-5CFD-41DD-BC5D-ED9A7BACD563}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitLoop", "SplitLoop\SplitLoop.csproj", "{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04. SplitLoop", "SplitLoop\04. SplitLoop.csproj", "{1DD48CBF-6EAF-48CF-A5DC-D324B7C7D1AF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitLoopTests", "Tests\SplitLoopTests\SplitLoopTests.csproj", "{FF8804D7-370C-4914-963A-723B123E5CF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04. SplitLoopTests", "Tests\SplitLoopTests\04. SplitLoopTests.csproj", "{FF8804D7-370C-4914-963A-723B123E5CF9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractAndRename", "ExtractAndRename\ExtractAndRename.csproj", "{3EC6839C-51C3-49CE-8BA1-F363FEBDD9AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01. ExtractAndRename", "ExtractAndRename\01. ExtractAndRename.csproj", "{3EC6839C-51C3-49CE-8BA1-F363FEBDD9AA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtractAndRenameTests", "Tests\ExtractAndRenameTests\ExtractAndRenameTests.csproj", "{2E3DE8D7-EA7C-4792-AD99-9ABE86D0F190}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01. ExtractAndRenameTests", "Tests\ExtractAndRenameTests\01. ExtractAndRenameTests.csproj", "{2E3DE8D7-EA7C-4792-AD99-9ABE86D0F190}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoveAndSlide", "MoveAndSlide\MoveAndSlide.csproj", "{758A6545-F0DA-406D-AF6E-80BE43BCA8FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03. MoveAndSlide", "MoveAndSlide\03. MoveAndSlide.csproj", "{758A6545-F0DA-406D-AF6E-80BE43BCA8FD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoveAndSlideTests", "Tests\MoveAndSlideTests\MoveAndSlideTests.csproj", "{BEDE1E15-7D95-4838-A3C4-3A0E4C6439B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03. MoveAndSlideTests", "Tests\MoveAndSlideTests\03. MoveAndSlideTests.csproj", "{BEDE1E15-7D95-4838-A3C4-3A0E4C6439B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Day 2", "Day 2", "{DC9D3FFF-B935-4453-8A14-954D6C033BA1}"
 EndProject
@@ -59,13 +59,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SproutClass", "SproutClass\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SproutClassTests", "Tests\SproutClassTests\SproutClassTests.csproj", "{1C4BAE88-FF2F-4FED-89A9-23FECECFB1AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterizeMethod", "ParameterizeMethod\ParameterizeMethod.csproj", "{E3342682-DC93-4BC3-BB78-7A680AEEFD2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParameterizeMethod", "ParameterizeMethod\ParameterizeMethod.csproj", "{E3342682-DC93-4BC3-BB78-7A680AEEFD2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterizeMethodTests", "Tests\ParameterizeMethodTests\ParameterizeMethodTests.csproj", "{E165C1AC-0588-43AD-9529-32F26E460AEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParameterizeMethodTests", "Tests\ParameterizeMethodTests\ParameterizeMethodTests.csproj", "{E165C1AC-0588-43AD-9529-32F26E460AEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubclassAndOverride", "SubclassAndOverride\SubclassAndOverride.csproj", "{E7EEB008-7014-495E-982B-B3B82487E3C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubclassAndOverride", "SubclassAndOverride\SubclassAndOverride.csproj", "{E7EEB008-7014-495E-982B-B3B82487E3C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubclassAndOverrideTests", "Tests\SubclassAndOverrideTests\SubclassAndOverrideTests.csproj", "{6375E535-F19B-475E-8986-5046942C82E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubclassAndOverrideTests", "Tests\SubclassAndOverrideTests\SubclassAndOverrideTests.csproj", "{6375E535-F19B-475E-8986-5046942C82E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

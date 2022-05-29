@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-      <TargetFramework>net6.0</TargetFramework>
-      <LangVersion>latest</LangVersion>
+    <TargetFramework>net6.0</TargetFramework>
+
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ExtractAndRename\ExtractAndRename.csproj" />
+    <ProjectReference Include="..\..\ReplaceConditionalWithPolymorphism\06. ReplaceConditionalWithPolymorphism.csproj" />
   </ItemGroup>
 
 </Project>
