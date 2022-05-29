@@ -31,7 +31,7 @@ In order to do so,
 
 In this lab we are going to perform the steps needed for the latter (of course :))
 
-# 1. First steps
+# Part 1. First steps
 ## Extract function
 As a first step, let's begin by extracting functionality from the current long `Statement` function.
 The `switch` statement related to calculating the charge of a performance is a good start as it is performs 1 thing that we can return in a method.
@@ -92,7 +92,7 @@ As a final refactoring during this step, apply the **Inline variable** refactori
 
 Your `BillGenerator` class should look something like the one in folder `src\01 First Steps`
 
-# 2. Extracting Volume Credits
+# Part 2. Extracting Volume Credits
 Next we want to extract the `volumeCredits` calculation from the foreach loop.
 Unfortunately due to `volumeCredits` accumulator, we cannot rely on the automated **"Extract Method"** functionality.
 Instead we are going to perform the **Extract Method** refactoring manually. 
@@ -171,7 +171,7 @@ After compiling, testing and committing; apply **Inline variable** on `volumeCre
 
 Your `BillGenerator` class should look something like the one in folder `src\02 Extract Volume Credits`
 
-# 3. More extractions
+# Part 3. More extractions
 In order to remove the variable `totalAmount` we can use the same steps as before.
 First **Split loop** on the first foreach loop.
 After this refactoring it should look like below:
@@ -225,7 +225,7 @@ As a final refactoring in this part, **Inline variable** on `format` in `Usd`
 
 Your `BillGenerator` class should look something like the one in folder `src\03 More extractions`
 
-# 4. Split phase and adding render HTML
+# Part 4. Split phase and adding render HTML
 So far, we worked on bringing structure onto the original function so that we can easily understand the various parts.
 In order to add the HTML support, we could stop now, just copy the seven or so lines remaining in `Statement`, create an HTML variant and call it a day.<br/>
 This does mean however that the logic for what is required to generate a bill is still duplicated.
@@ -465,7 +465,7 @@ Easy.
 
 Your `TheatricalPlays` project should look something like the one in folder `src\04 Split Phase`
 
-# 5. Calculations by type
+# Part 5. Calculations by type
 Now that we've added the first request, we'll turn our attention to the second feature request: Supporting more categories of plays, each with its own cost and credits calculation.
 As it currently stands, we would have to add more switch statements and conditionals onto `AmountFor` and `VolumeCreditsFor` in order to facilitate such a request, 
 which is not the direction we want to go for.
