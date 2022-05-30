@@ -14,7 +14,7 @@ New method named `CalcaluteOrderPrice`
 
 And test!
 
-2. Create intermediate datastructure and add to second method (using `Change signature` refactor)
+2. Create intermediate datastructure and add to second method (using `Change signature` refactor, Ctrl+'.')
 
 New class `OrderData.cs`
 

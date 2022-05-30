@@ -1,4 +1,4 @@
-﻿1. Copy the loop
+﻿1. Copy the loop in Customer.cs
 
 ```
             // determine amounts for each line

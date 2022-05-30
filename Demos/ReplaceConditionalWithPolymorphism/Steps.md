@@ -8,11 +8,11 @@ First create new base class Bird.cs
 
 namespace ReplaceConditionalWithPolymorphism
 {
-    public class Bird
+    internal class Bird
     {
         protected readonly BirdProperties properties;
 
-        public Bird(BirdProperties properties)
+        internal Bird(BirdProperties properties)
         {
             this.properties = properties;
         }
@@ -26,9 +26,9 @@ Then create a new subclass EuropeanSwallow.cs
 
 namespace ReplaceConditionalWithPolymorphism
 {
-    public class EuropeanSwallow : Bird
+    internal class EuropeanSwallow : Bird
     {
-        public EuropeanSwallow(BirdProperties properties) : base(properties)
+        internal EuropeanSwallow(BirdProperties properties) : base(properties)
         {
         }
     }
@@ -40,9 +40,9 @@ AfricanSwallow.cs
 
 namespace ReplaceConditionalWithPolymorphism
 {
-    public class AfricanSwallow : Bird
+    internal class AfricanSwallow : Bird
     {
-        public AfricanSwallow(BirdProperties properties) : base(properties)
+        internal AfricanSwallow(BirdProperties properties) : base(properties)
         {
         }
     }
@@ -54,9 +54,9 @@ NorwegianBlueParrot.cs
 
 namespace ReplaceConditionalWithPolymorphism
 {
-    public class NorwegianBlueParrot : Bird
+    internal class NorwegianBlueParrot : Bird
     {
-        public NorwegianBlueParrot(BirdProperties properties) : base(properties)
+        internal NorwegianBlueParrot(BirdProperties properties) : base(properties)
         {
         }
     }
@@ -92,16 +92,16 @@ Bird.cs
 
 namespace ReplaceConditionalWithPolymorphism
 {
-    public class Bird
+    internal class Bird
     {
         private readonly BirdProperties properties;
 
-        public Bird(BirdProperties properties)
+        internal Bird(BirdProperties properties)
         {
             this.properties = properties;
         }
 
-        public virtual int GetAirSpeed()
+        internal virtual int GetAirSpeed()
         {
             switch (properties.Type)
             {
@@ -130,12 +130,14 @@ FlightCalculator.cs
         }
 ```
 
+Test
+
 3. Take a subclass and create an override
 
 EuropeanSwallow.cs
 ```
 
-        public override int GetAirSpeed()
+        internal override int GetAirSpeed()
         {
             return 35;
         }
@@ -145,7 +147,7 @@ EuropeanSwallow.cs
 
 AfricanSwallow.cs
 ```
-        public override int GetAirSpeed()
+        internal override int GetAirSpeed()
         {
             return 40 - 2 * properties.NumberOfCoconuts;
         }
@@ -156,7 +158,7 @@ AfricanSwallow.cs
 NorwegianBlueParrot.cs
 ```
 
-        public override int GetAirSpeed()
+        internal override int GetAirSpeed()
         {
             return properties.IsNailed ? 0 : 10 + properties.Voltage / 10;
         }
@@ -168,7 +170,7 @@ Bird.cs
 
 ```
 
-        public virtual int GetAirSpeed()
+        internal virtual int GetAirSpeed()
         {
             return 0;
         }

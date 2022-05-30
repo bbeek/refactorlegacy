@@ -6,7 +6,7 @@ var outstanding = quantity * itemPrice -
                 Math.Min(quantity * itemPrice * 0.1m, 100);
 ```
 
-replace all local variables for basePrice
+replace all local variables for basePrice with Ctrl+. -> introduce local. (for basePrice, for all occurences)
 test after each rename
 
 ```
@@ -17,6 +17,7 @@ var outstanding = basePrice - quantityDiscount + shipping;
 ```
 
 2. Extract function:
+Make PrintOwning adhere to clean code, ie. do one thing (and do it well ;), extract CalculateOutstandingAmount
 
 CalculateOutstandingAmount
 
@@ -41,12 +42,12 @@ Test
 
 3. Rename variable:
 
-rename `outstanding` to `dueAmount`
+rename `outstanding` to `dueAmount` as the it does not display the outstanding but the due amount
 Test
 
 4. Rename function:
 
-rename `CalculateOutstandingAmount` to `CalculateDueAmount`
+rename `CalculateOutstandingAmount` to `CalculateDueAmount`, idem.
 Test
 
 5. Rename class:
